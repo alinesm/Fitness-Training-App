@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - npm install
+      - npx prettier --check .
+  build:
+    commands:
+      - npm run build
+  post_build:
+    commands:
+      - echo "In post_build phase"
+      - aws s3 sync dist/ s3://mvp-youtuber-funding-app --delete
+      - aws cloudfront create-invalidation --distribution-id E3HQ1SB3SYKGL9
+        --paths "/*"
