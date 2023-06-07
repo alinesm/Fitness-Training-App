@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExerciseInfo from './ExerciseInfo';
 import { FaPlusCircle, FaRegHandPaper } from 'react-icons/fa';
 
@@ -22,7 +22,7 @@ function SupertestModal({
     ];
     setExercisesList(combinedArray);
     // setExercisesList([...exercisesList, ...supertestList]);
-    // setSupertestList([]);
+    setSupertestList([]);
     setOpenModalSuperset(false);
     // setAux([...supertestList]);
     // setSupertestList([]);

@@ -105,11 +105,11 @@ function Table({
               </>
             )} */}
 
-            {exercisesList.map((exerciseInfo) =>
+            {exercisesList.map((exerciseInfo, index) =>
               exerciseInfo.supertests ? (
                 exerciseInfo.supertests.map((exercise) => (
                   <SupertestsInfo
-                    key={exercise.exerciseName}
+                    key={index}
                     exercisesList={exercisesList}
                     setExercisesList={setExercisesList}
                     exerciseInfo={exercise}
@@ -117,7 +117,7 @@ function Table({
                 ))
               ) : (
                 <ExerciseInfo
-                  key={exerciseInfo.exerciseName}
+                  key={index}
                   exercisesList={exercisesList}
                   setExercisesList={setExercisesList}
                   exerciseInfo={exerciseInfo}
