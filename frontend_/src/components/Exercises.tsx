@@ -14,8 +14,12 @@ function Exercises({
   exercisesList,
   setExercisesList,
   openModalSuperset,
-  setSupertestList,
-  supertestList,
+  setSupersetsList,
+  supersetsList,
+  circuitList,
+  openModalCircuit,
+
+  setCircuitList,
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,8 +69,11 @@ function Exercises({
             exercisesList={exercisesList}
             setExercisesList={setExercisesList}
             openModalSuperset={openModalSuperset}
-            setSupertestList={setSupertestList}
-            supertestList={supertestList}
+            setSupersetsList={setSupersetsList}
+            supersetsList={supersetsList}
+            circuitList={circuitList}
+            setCircuitList={setCircuitList}
+            openModalCircuit={openModalCircuit}
           />
         ))
       )}

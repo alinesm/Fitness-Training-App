@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
-
 import AddExercises from './AddExercises';
 import Table from './Table';
 import SupertestModal from './SupertestModal';
+import CircuitModal from './CircuitModal';
 
-function WorkoutsCreation({
-  setExercises,
-  exercises,
-  bodyPart,
-  setBodyPart,
-  exercisesList,
-  setExercisesList,
-}) {
+function WorkoutsCreation() {
   const [openModalSuperset, setOpenModalSuperset] = useState(false);
-  const [supertestList, setSupertestList] = useState([]);
-  const [isSupertest, setIsSupertest] = useState(false);
+  const [openModalCircuit, setOpenModalCircuit] = useState(false); //modal for circuit
+  const [supersetsList, setSupersetsList] = useState([]);
+  const [circuitList, setCircuitList] = useState([]); //circuit list added to workout
+  const [workoutsList, setWorkoutsList] = useState([]);
+  const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
+
   return (
     <div className='grid grid-cols-2 bg-slate-600 p-7 w-full'>
       {openModalSuperset ? (
         <div className='w-full h-fit bg-white'>
           <SupertestModal
-            supertestList={supertestList}
+            supersetsList={supersetsList}
             setOpenModalSuperset={setOpenModalSuperset}
-            setSupertestList={setSupertestList}
+            setSupersetsList={setSupersetsList}
             exercisesList={exercisesList}
             setExercisesList={setExercisesList}
-            isSupertest={isSupertest}
-            setIsSupertest={setIsSupertest}
+          />
+        </div>
+      ) : openModalCircuit ? (
+        <div className='w-full bg-white'>
+          <CircuitModal
+            circuitList={circuitList}
+            setOpenModalCircuit={setOpenModalCircuit}
+            setCircuitList={setCircuitList}
+            exercisesList={exercisesList}
+            setExercisesList={setExercisesList}
           />
         </div>
       ) : (
@@ -35,22 +40,21 @@ function WorkoutsCreation({
             exercisesList={exercisesList}
             setExercisesList={setExercisesList}
             setOpenModalSuperset={setOpenModalSuperset}
-            isSupertest={isSupertest}
-            supertestList={supertestList}
+            supersetsList={supersetsList}
+            setOpenModalCircuit={setOpenModalCircuit}
           />
         </div>
       )}
 
       <AddExercises
-        setExercises={setExercises}
-        exercises={exercises}
-        bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
         exercisesList={exercisesList}
         setExercisesList={setExercisesList}
         openModalSuperset={openModalSuperset}
-        setSupertestList={setSupertestList}
-        supertestList={supertestList}
+        setSupersetsList={setSupersetsList}
+        supersetsList={supersetsList}
+        circuitList={circuitList}
+        setCircuitList={setCircuitList}
+        openModalCircuit={openModalCircuit}
       />
     </div>
   );

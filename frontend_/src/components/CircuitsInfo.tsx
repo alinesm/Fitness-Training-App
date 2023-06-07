@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaTrash, FaRegEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
-function SupertestsInfo({ exercisesList, setExercisesList, exerciseInfo }) {
+function CircuitsInfo({ exercisesList, setExercisesList, exerciseInfo }) {
   // console.log('exerciseInfo', exerciseInfo);
   const maxLength = 13;
 
@@ -16,7 +16,7 @@ function SupertestsInfo({ exercisesList, setExercisesList, exerciseInfo }) {
 
   return (
     <>
-      <div className='bg-blue-50 flex items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>
+      <div className='bg-green-200 flex items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>
         <div className='w-20 '>
           <img
             className='w-full h-full'
@@ -70,4 +70,4 @@ function SupertestsInfo({ exercisesList, setExercisesList, exerciseInfo }) {
   );
 }
 
-export default SupertestsInfo;
+export default CircuitsInfo;

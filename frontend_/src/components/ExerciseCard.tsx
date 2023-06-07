@@ -6,10 +6,13 @@ function ExerciseCard({
   exercise,
   exercisesList,
   setExercisesList,
-  setSupertestList,
-  supertestList,
+  setSupersetsList,
+  supersetsList,
+  circuitList,
+  setCircuitList,
+  openModalCircuit,
 }) {
-  // console.log('exercise', exercise);
+  console.log('listaaaa', exercisesList);
   const [exerciseInfo, setExerciseInfo] = useState({
     exerciseId: '',
     exerciseGift: '',
@@ -28,16 +31,19 @@ function ExerciseCard({
       exerciseName: exercise.name,
       exerciseGift: exercise.gifUrl,
     };
-    if (!openModalSuperset) {
+    if (openModalSuperset) {
       setExerciseInfo(addExercise);
-      setExercisesList([...exercisesList, addExercise]);
+      setSupersetsList([...supersetsList, addExercise]);
+    } else if (openModalCircuit) {
+      setExerciseInfo(addExercise);
+      setCircuitList([...circuitList, addExercise]);
     } else {
       setExerciseInfo(addExercise);
-      setSupertestList([...supertestList, addExercise]);
+      setExercisesList([...exercisesList, addExercise]);
     }
   }
   console.log('exercisesList', exercisesList);
-  console.log('supertestList', supertestList);
+  console.log('supersetsList', supersetsList);
 
   return (
     <div className='flex flex-col items-center  w-40 relative rounded-md shadow-md h-60 border px-2 py-3 bg-gray-100'>

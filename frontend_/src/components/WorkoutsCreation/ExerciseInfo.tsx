@@ -1,8 +1,7 @@
 import React from 'react';
-import { FaTrash, FaRegEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
 function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
-  // console.log('exerciseInfo', exerciseInfo);
   const maxLength = 13;
 
   function handleDeleteExercise(id) {
@@ -15,20 +14,20 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
   }
 
   return (
-    <tr className='bg-white border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
-      <td className='w-20 '>
+    <div className='bg-white flex items-center justify-between px-4  border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+      <div className='w-20 '>
         <img
           className='w-full h-full'
           src={exerciseInfo.exerciseGift}
-          alt='Apple Watch'
+          alt='gif'
         />
-      </td>
-      <td className='px-1 text-gray-900 dark:text-white capitalize'>
+      </div>
+      <div className='px-1 text-gray-900 dark:text-white capitalize'>
         {exerciseInfo.exerciseName.length <= 13
           ? exerciseInfo.exerciseName
           : `${exerciseInfo.exerciseName.substring(0, maxLength)}...`}
-      </td>
-      <td>
+      </div>
+      <div>
         <div className='flex items-center space-x-3'>
           <div>
             <input
@@ -39,8 +38,8 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
             />
           </div>
         </div>
-      </td>
-      <td className='font-semibold text-gray-900 dark:text-white'>
+      </div>
+      <div className='font-semibold text-gray-900 dark:text-white'>
         <div>
           <input
             type='text'
@@ -49,8 +48,8 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
             required
           />
         </div>
-      </td>
-      <td className='text-gray-900 dark:text-white'>
+      </div>
+      <div className='text-gray-900 dark:text-white'>
         <div>
           <select className='bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
             <option>None</option>
@@ -58,13 +57,13 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
             <option>90 sec</option>
           </select>
         </div>
-      </td>
-      <td className='py-8 flex gap-3'>
+      </div>
+      <div className='py-8 flex gap-3'>
         <FaTrash
           onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
         />
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
 
