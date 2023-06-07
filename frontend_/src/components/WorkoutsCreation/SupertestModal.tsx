@@ -8,12 +8,26 @@ function SupertestModal({
   setSupertestList,
   exercisesList,
   setExercisesList,
+  isSupertest,
+  setIsSupertest,
 }) {
+  // const [aux, setAux] = useState([...supertestList]);
+
   function handleCreateSupertest() {
+    // setAux([]);
+
+    const combinedArray = [
+      ...exercisesList,
+      { supertests: [...supertestList] },
+    ];
+    setExercisesList(combinedArray);
+    // setExercisesList([...exercisesList, ...supertestList]);
+    // setSupertestList([]);
     setOpenModalSuperset(false);
-    const addSupertest = [...supertestList];
-    setExercisesList([...exercisesList, ...addSupertest]);
-    setSupertestList([]);
+    // setAux([...supertestList]);
+    // setSupertestList([]);
+
+    // setIsSupertest(true);
   }
   console.log('lista', exercisesList);
 

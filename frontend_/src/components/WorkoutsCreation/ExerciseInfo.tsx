@@ -2,12 +2,14 @@ import React from 'react';
 import { FaTrash, FaRegEdit } from 'react-icons/fa';
 
 function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
-  console.log('exerciseInfo', exerciseInfo);
+  // console.log('exerciseInfo', exerciseInfo);
   const maxLength = 13;
 
-  function handleDeleteExercise(name) {
+  function handleDeleteExercise(id) {
+    // console.log(arr.map((item) => item.supertests ? item.supertests.map((subItem) => subItem) : item).flat())
+
     const updatedExercise = exercisesList.filter(
-      (item) => item.exerciseName !== name,
+      (item) => item.exerciseId !== id,
     );
     setExercisesList(updatedExercise);
   }
@@ -51,7 +53,7 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
       <td className='text-gray-900 dark:text-white'>
         <div>
           <select className='bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-            <option>30 sec</option>
+            <option>None</option>
             <option>45 sec</option>
             <option>90 sec</option>
           </select>
@@ -59,7 +61,7 @@ function ExerciseInfo({ exercisesList, setExercisesList, exerciseInfo }) {
       </td>
       <td className='py-8 flex gap-3'>
         <FaTrash
-          onClick={() => handleDeleteExercise(exerciseInfo.exerciseName)}
+          onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
         />
       </td>
     </tr>

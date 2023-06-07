@@ -25,6 +25,10 @@ function Exercises({
 
       if (bodyPart === 'all') {
         exercisesData = [...data];
+      } else {
+        exercisesData = data.filter((exercise) =>
+          exercise.bodyPart.includes(bodyPart),
+        );
       }
       setExercises(exercisesData);
       setIsLoading(false);
@@ -47,6 +51,7 @@ function Exercises({
   //   }
   //   exercisesByBodyPart();
   // }, [bodyPart, setExercises]);
+  // console.log('bodypart', bodyPart);
 
   return (
     <div className='flex flex-wrap gap-4'>

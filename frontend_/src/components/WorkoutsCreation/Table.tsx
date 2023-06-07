@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import ExerciseInfo from './ExerciseInfo';
 import { FaPlusCircle, FaRegHandPaper } from 'react-icons/fa';
+import SupertestsInfo from './SupertestsInfo';
 
-function Table({ exercisesList, setExercisesList, setOpenModalSuperset }) {
+function Table({
+  exercisesList,
+  isSupertest,
+  setExercisesList,
+  setOpenModalSuperset,
+  supertestList,
+}) {
   function handleCreateSuperset() {
     setOpenModalSuperset(true);
   }
@@ -67,7 +74,7 @@ function Table({ exercisesList, setExercisesList, setOpenModalSuperset }) {
           </thead>
 
           <tbody>
-            {exercisesList.map((exerciseInfo) => (
+            {/* {exercisesList.map((exerciseInfo) => (
               <ExerciseInfo
                 key={exerciseInfo.exerciseName}
                 exercisesList={exercisesList}
@@ -75,6 +82,48 @@ function Table({ exercisesList, setExercisesList, setOpenModalSuperset }) {
                 exerciseInfo={exerciseInfo}
               />
             ))}
+
+            {supertestList.length > 0 && (
+              <>
+                <tr className='flex gap-10 py-3 w-full'>
+                  <p className=' border-t-4'>Superset of </p>
+                  <input
+                    type='number'
+                    className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    placeholder='1'
+                    required
+                  />
+                </tr>
+                {supertestList.map((exerciseInfo) => (
+                  <SupertestsInfo
+                    key={exerciseInfo.exerciseName}
+                    exercisesList={exercisesList}
+                    setExercisesList={setExercisesList}
+                    exerciseInfo={exerciseInfo}
+                  />
+                ))}
+              </>
+            )} */}
+
+            {exercisesList.map((exerciseInfo) =>
+              exerciseInfo.supertests ? (
+                exerciseInfo.supertests.map((exercise) => (
+                  <SupertestsInfo
+                    key={exercise.exerciseName}
+                    exercisesList={exercisesList}
+                    setExercisesList={setExercisesList}
+                    exerciseInfo={exercise}
+                  />
+                ))
+              ) : (
+                <ExerciseInfo
+                  key={exerciseInfo.exerciseName}
+                  exercisesList={exercisesList}
+                  setExercisesList={setExercisesList}
+                  exerciseInfo={exerciseInfo}
+                />
+              ),
+            )}
           </tbody>
         </table>
       </div>

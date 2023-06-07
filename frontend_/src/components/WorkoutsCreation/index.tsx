@@ -8,13 +8,15 @@ function WorkoutsCreation({
   setExercises,
   exercises,
   bodyPart,
+  setBodyPart,
   exercisesList,
   setExercisesList,
 }) {
   const [openModalSuperset, setOpenModalSuperset] = useState(false);
   const [supertestList, setSupertestList] = useState([]);
+  const [isSupertest, setIsSupertest] = useState(false);
   return (
-    <div className='grid grid-cols-2 bg-slate-600 py-20 px-7 w-full'>
+    <div className='grid grid-cols-2 bg-slate-600 p-7 w-full'>
       {openModalSuperset ? (
         <div className='w-full h-fit bg-white'>
           <SupertestModal
@@ -23,6 +25,8 @@ function WorkoutsCreation({
             setSupertestList={setSupertestList}
             exercisesList={exercisesList}
             setExercisesList={setExercisesList}
+            isSupertest={isSupertest}
+            setIsSupertest={setIsSupertest}
           />
         </div>
       ) : (
@@ -31,6 +35,8 @@ function WorkoutsCreation({
             exercisesList={exercisesList}
             setExercisesList={setExercisesList}
             setOpenModalSuperset={setOpenModalSuperset}
+            isSupertest={isSupertest}
+            supertestList={supertestList}
           />
         </div>
       )}
@@ -39,6 +45,7 @@ function WorkoutsCreation({
         setExercises={setExercises}
         exercises={exercises}
         bodyPart={bodyPart}
+        setBodyPart={setBodyPart}
         exercisesList={exercisesList}
         setExercisesList={setExercisesList}
         openModalSuperset={openModalSuperset}

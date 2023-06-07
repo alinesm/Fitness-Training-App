@@ -9,7 +9,9 @@ function ExerciseCard({
   setSupertestList,
   supertestList,
 }) {
+  // console.log('exercise', exercise);
   const [exerciseInfo, setExerciseInfo] = useState({
+    exerciseId: '',
     exerciseGift: '',
     exerciseName: '',
     sets: '',
@@ -22,6 +24,7 @@ function ExerciseCard({
   function handleAddExercise() {
     const addExercise = {
       ...exerciseInfo,
+      exerciseId: exercise.id,
       exerciseName: exercise.name,
       exerciseGift: exercise.gifUrl,
     };
