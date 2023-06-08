@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import TableHead from './TableHead';
-import ExerciseInfo from './ExerciseInfo';
+import CircuitsInfo from './CircuitsInfo';
 
 function CircuitModal({
   circuitList,
@@ -10,13 +10,26 @@ function CircuitModal({
   exercisesList,
   setExercisesList,
 }) {
+  const [numRounds, setNumRounds] = useState('');
+
   function handleCreateCircuit() {
-    const combinedArray = [...exercisesList, { circuits: [...circuitList] }];
-    setExercisesList(combinedArray);
-    // setExercisesList([...exercisesList, ...supersetsList]);
+    const circuitObject = {
+      circuits: [{ circuitOf: numRounds }, ...circuitList],
+    };
+    const updatedExercisesList = [...exercisesList, circuitObject];
+    setExercisesList(updatedExercisesList);
     setCircuitList([]);
     setOpenModalCircuit(false);
   }
+  console.log('lista com circuitos', exercisesList);
+
+  // function handleCreateCircuit() {
+  //   const combinedArray = [...exercisesList, { circuits: [...circuitList] }];
+  //   setExercisesList(combinedArray);
+  //   // setExercisesList([...exercisesList, ...supersetsList]);
+  //   setCircuitList([]);
+  //   setOpenModalCircuit(false);
+  // }
 
   return (
     <div>
@@ -31,17 +44,29 @@ function CircuitModal({
             Create Circuit
           </div>
         </button>
+        <p>Circuit of</p>
+        <input
+          value={numRounds}
+          onChange={(e) => setNumRounds(e.target.value)}
+          className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm
+        rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1
+        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          type='number'
+          placeholder='1'
+        />
       </div>
 
       <div class='sm:rounded-lg'>
         <div class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <TableHead />
-          {circuitList.map((exerciseInfo) => (
-            <ExerciseInfo
+          {circuitList.map((exerciseInfo, index) => (
+            <CircuitsInfo
               key={exerciseInfo.exerciseName}
               exercisesList={circuitList}
               setExercisesList={setCircuitList}
               exerciseInfo={exerciseInfo}
+              index={index}
             />
           ))}
         </div>

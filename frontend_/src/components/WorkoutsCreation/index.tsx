@@ -108,3 +108,114 @@ function WorkoutsCreation() {
 }
 
 export default WorkoutsCreation;
+
+// [
+//   {
+//       "exerciseId": "0001",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0001.gif",
+//       "exerciseName": "3/4 sit-up",
+//       "sets": "1",
+//       "text": "1",
+//       "restSecs": "45"
+//   },
+//   {
+//       "exerciseId": "0002",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0002.gif",
+//       "exerciseName": "45° side bend",
+//       "sets": "2",
+//       "text": "2",
+//       "restSecs": "45"
+//   },
+//   {
+//       "supertests": [
+//           {
+//               "supersetOf": "3"
+//           },
+//           {
+//               "exerciseId": "1512",
+//               "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/1512.gif",
+//               "exerciseName": "all fours squad stretch",
+//               "sets": "",
+//               "text": "1",
+//               "restSecs": "45"
+//           },
+//           {
+//               "exerciseId": "0006",
+//               "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0006.gif",
+//               "exerciseName": "alternate heel touchers",
+//               "sets": "",
+//               "text": "2",
+//               "restSecs": "90"
+//           }
+//       ]
+//   },
+//   {
+//       "rest": "90"
+//   },
+//   {
+//       "exerciseId": "1512",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/1512.gif",
+//       "exerciseName": "all fours squad stretch",
+//       "sets": "3",
+//       "text": "3",
+//       "restSecs": "45"
+//   },
+//   {
+//       "exerciseId": "0006",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0006.gif",
+//       "exerciseName": "alternate heel touchers",
+//       "sets": "4",
+//       "text": "4",
+//       "restSecs": "90"
+//   },
+//   {
+//       "circuits": [
+//           {
+//               "circuitOf": "4"
+//           },
+//           {
+//               "exerciseId": "1512",
+//               "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/1512.gif",
+//               "exerciseName": "all fours squad stretch",
+//               "sets": "",
+//               "text": "1",
+//               "restSecs": "45"
+//           },
+//           {
+//               "exerciseId": "0006",
+//               "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0006.gif",
+//               "exerciseName": "alternate heel touchers",
+//               "sets": "",
+//               "text": "2",
+//               "restSecs": "45"
+//           },
+//           {
+//               "exerciseId": "0007",
+//               "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/0007.gif",
+//               "exerciseName": "alternate lateral pulldown",
+//               "sets": "",
+//               "text": "3",
+//               "restSecs": "90"
+//           }
+//       ]
+//   },
+//   {
+//       "rest": "90"
+//   },
+//   {
+//       "exerciseId": "1368",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/1368.gif",
+//       "exerciseName": "ankle circles",
+//       "sets": "5",
+//       "text": "5",
+//       "restSecs": "90"
+//   },
+//   {
+//       "exerciseId": "3293",
+//       "exerciseGift": "http://d205bpvrqc9yn1.cloudfront.net/3293.gif",
+//       "exerciseName": "archer pull up",
+//       "sets": "6",
+//       "text": "6",
+//       "restSecs": "45"
+//   }
+// ]

@@ -2,6 +2,7 @@ import ExerciseInfo from './ExerciseInfo';
 import { FaPlusCircle } from 'react-icons/fa';
 import TableHead from './TableHead';
 import SupertestsInfo from './SupertestsInfo';
+import { useState } from 'react';
 
 function SupertestModal({
   setOpenModalSuperset,
@@ -10,29 +11,23 @@ function SupertestModal({
   exercisesList,
   setExercisesList,
 }) {
-  // const handleSaveExerciseInfo = (updatedExerciseInfo, index) => {
-  //   setExercisesList((prevList) => {
-  //     const newList = [...prevList];
-  //     newList[index] = updatedExerciseInfo;
-  //     return newList;
-  //   });
-  // };
-
-  // function handleSaveButtonClick() {
-  //   supersetsList.forEach((exerciseInfo, index) => {
-  //     handleSaveExerciseInfo(exerciseInfo, index);
-  //   });
+  const [numSets, setNumSets] = useState('');
+  // function handleCreateSupertest() {
+  //   const combinedArray = [
+  //     ...exercisesList,
+  //     { supertests: [...supersetsList] },
+  //   ];
+  //   setExercisesList(combinedArray);
+  //   setSupersetsList([]);
+  //   setOpenModalSuperset(false);
   // }
 
   function handleCreateSupertest() {
-    // handleSaveButtonClick();
-    const combinedArray = [
-      ...exercisesList,
-      { supertests: [...supersetsList] },
-    ];
-    setExercisesList(combinedArray);
-
-    // setExercisesList([...exercisesList, ...supersetsList]);
+    const supertestObject = {
+      supertests: [{ supersetOf: numSets }, ...supersetsList],
+    };
+    const updatedExercisesList = [...exercisesList, supertestObject];
+    setExercisesList(updatedExercisesList);
     setSupersetsList([]);
     setOpenModalSuperset(false);
   }
@@ -51,23 +46,27 @@ function SupertestModal({
             Create Supertest
           </div>
         </button>
+        <p>Superset of</p>
+        <input
+          value={numSets}
+          onChange={(e) => setNumSets(e.target.value)}
+          className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm
+        rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1
+        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          type='number'
+          placeholder='1'
+        />
       </div>
 
       <div class='sm:rounded-lg'>
         <div class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <TableHead />
           {supersetsList.map((exerciseInfo, index) => (
-            // <ExerciseInfo
-            //   key={exerciseInfo.exerciseName}
-            //   exercisesList={supersetsList}
-            //   setExercisesList={setSupersetsList}
-            //   exerciseInfo={exerciseInfo}
-            // />
             <SupertestsInfo
               key={exerciseInfo.exerciseName}
               exercisesList={supersetsList}
               setExercisesList={setSupersetsList}
-              // onSaveExerciseInfo={handleSaveExerciseInfo}
               index={index}
               exerciseInfo={exerciseInfo}
             />
