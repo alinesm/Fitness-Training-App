@@ -4,6 +4,8 @@ import ExerciseCard from './ExerciseCard';
 import {
   getAllExercises,
   getExercisesByBodyPart,
+  exerciseData,
+  setExerciseData,
 } from '../services/externalApi';
 import data from '../assets/data';
 
@@ -18,8 +20,9 @@ function Exercises({
   supersetsList,
   circuitList,
   openModalCircuit,
-
   setCircuitList,
+  teste,
+  setTeste,
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -74,6 +77,8 @@ function Exercises({
             circuitList={circuitList}
             setCircuitList={setCircuitList}
             openModalCircuit={openModalCircuit}
+            teste={teste}
+            setTeste={setTeste}
           />
         ))
       )}

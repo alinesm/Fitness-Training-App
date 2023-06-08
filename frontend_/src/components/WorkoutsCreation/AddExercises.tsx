@@ -12,6 +12,8 @@ function AddExercises({
   circuitList,
   setCircuitList,
   openModalCircuit,
+  teste,
+  setTeste,
 }) {
   const [exercises, setExercises] = useState([]); // exercisses from Api
   const [bodyPart, setBodyPart] = useState('all');
@@ -46,6 +48,8 @@ function AddExercises({
         circuitList={circuitList}
         setCircuitList={setCircuitList}
         openModalCircuit={openModalCircuit}
+        teste={teste}
+        setTeste={setTeste}
       />
     </div>
   );

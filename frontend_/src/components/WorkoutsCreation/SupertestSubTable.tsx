@@ -16,12 +16,13 @@ function SupertestSubTable({ exerciseInfo, exercisesList, setExercisesList }) {
         />
       </div>
 
-      {exerciseInfo.supertests.map((exercise) => (
+      {exerciseInfo.supertests.map((exercise, index) => (
         <SupertestsInfo
           key={exercise.exerciseName}
           exercisesList={exercisesList}
           setExercisesList={setExercisesList}
           exerciseInfo={exercise}
+          index={index}
         />
       ))}
     </div>

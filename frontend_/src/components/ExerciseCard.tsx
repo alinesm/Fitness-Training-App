@@ -11,39 +11,41 @@ function ExerciseCard({
   circuitList,
   setCircuitList,
   openModalCircuit,
+  teste,
+  setTeste,
 }) {
-  console.log('listaaaa', exercisesList);
-  const [exerciseInfo, setExerciseInfo] = useState({
-    exerciseId: '',
-    exerciseGift: '',
-    exerciseName: '',
-    sets: '',
-    text: '',
-    restSecs: '',
-  });
+  // const [exerciseInfo, setExerciseInfo] = useState({
+  //   exerciseId: '',
+  //   exerciseGift: '',
+  //   exerciseName: '',
+  //   sets: '',
+  //   text: '',
+  //   restSecs: '',
+  // });
 
   const maxLength = 32;
 
   function handleAddExercise() {
     const addExercise = {
-      ...exerciseInfo,
+      ...teste,
       exerciseId: exercise.id,
       exerciseName: exercise.name,
       exerciseGift: exercise.gifUrl,
     };
     if (openModalSuperset) {
-      setExerciseInfo(addExercise);
+      setTeste(addExercise);
       setSupersetsList([...supersetsList, addExercise]);
     } else if (openModalCircuit) {
-      setExerciseInfo(addExercise);
+      setTeste(addExercise);
       setCircuitList([...circuitList, addExercise]);
     } else {
-      setExerciseInfo(addExercise);
+      setTeste(addExercise);
       setExercisesList([...exercisesList, addExercise]);
     }
   }
-  console.log('exercisesList', exercisesList);
-  console.log('supersetsList', supersetsList);
+  // console.log('dtaa', teste);
+  // console.log('exercisesList', exercisesList);
+  // console.log('supersetsList', supersetsList);
 
   return (
     <div className='flex flex-col items-center  w-40 relative rounded-md shadow-md h-60 border px-2 py-3 bg-gray-100'>

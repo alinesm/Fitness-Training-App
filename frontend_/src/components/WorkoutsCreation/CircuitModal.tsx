@@ -17,7 +17,6 @@ function CircuitModal({
     setCircuitList([]);
     setOpenModalCircuit(false);
   }
-  console.log('lista', exercisesList);
 
   return (
     <div>

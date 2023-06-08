@@ -1,6 +1,7 @@
 import ExerciseInfo from './ExerciseInfo';
 import { FaPlusCircle } from 'react-icons/fa';
 import TableHead from './TableHead';
+import SupertestsInfo from './SupertestsInfo';
 
 function SupertestModal({
   setOpenModalSuperset,
@@ -9,17 +10,33 @@ function SupertestModal({
   exercisesList,
   setExercisesList,
 }) {
+  // const handleSaveExerciseInfo = (updatedExerciseInfo, index) => {
+  //   setExercisesList((prevList) => {
+  //     const newList = [...prevList];
+  //     newList[index] = updatedExerciseInfo;
+  //     return newList;
+  //   });
+  // };
+
+  // function handleSaveButtonClick() {
+  //   supersetsList.forEach((exerciseInfo, index) => {
+  //     handleSaveExerciseInfo(exerciseInfo, index);
+  //   });
+  // }
+
   function handleCreateSupertest() {
+    // handleSaveButtonClick();
     const combinedArray = [
       ...exercisesList,
       { supertests: [...supersetsList] },
     ];
     setExercisesList(combinedArray);
+
     // setExercisesList([...exercisesList, ...supersetsList]);
     setSupersetsList([]);
     setOpenModalSuperset(false);
   }
-  console.log('lista', exercisesList);
+  console.log('lista com supertsets', exercisesList);
 
   return (
     <div>
@@ -39,11 +56,19 @@ function SupertestModal({
       <div class='sm:rounded-lg'>
         <div class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <TableHead />
-          {supersetsList.map((exerciseInfo) => (
-            <ExerciseInfo
+          {supersetsList.map((exerciseInfo, index) => (
+            // <ExerciseInfo
+            //   key={exerciseInfo.exerciseName}
+            //   exercisesList={supersetsList}
+            //   setExercisesList={setSupersetsList}
+            //   exerciseInfo={exerciseInfo}
+            // />
+            <SupertestsInfo
               key={exerciseInfo.exerciseName}
               exercisesList={supersetsList}
               setExercisesList={setSupersetsList}
+              // onSaveExerciseInfo={handleSaveExerciseInfo}
+              index={index}
               exerciseInfo={exerciseInfo}
             />
           ))}

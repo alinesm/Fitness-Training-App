@@ -14,6 +14,9 @@ function Table({
   setOpenModalSuperset,
   supersetsList,
   setOpenModalCircuit,
+  teste,
+  setTeste,
+  onSaveExerciseInfo,
 }) {
   const [rest, setRest] = useState('90');
 
@@ -67,7 +70,7 @@ function Table({
         <div class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <TableHead />
 
-          {exercisesList.map((exerciseInfo) =>
+          {exercisesList.map((exerciseInfo, index) =>
             exerciseInfo.supertests ? (
               <SupertestSubTable
                 exerciseInfo={exerciseInfo}
@@ -85,9 +88,9 @@ function Table({
             ) : (
               <ExerciseInfo
                 key={exerciseInfo.exerciseName}
-                exercisesList={exercisesList}
-                setExercisesList={setExercisesList}
                 exerciseInfo={exerciseInfo}
+                index={index}
+                onSaveExerciseInfo={onSaveExerciseInfo}
               />
             ),
           )}
@@ -98,6 +101,18 @@ function Table({
 }
 
 export default Table;
+
+// {exercisesList.map((exerciseInfo) =>
+//     <ExerciseInfo
+//       key={exerciseInfo.exerciseName}
+//       exercisesList={exercisesList}
+//       setExercisesList={setExercisesList}
+//       exerciseInfo={exerciseInfo}
+//       teste={teste}
+//       setTeste={setTeste}
+//     />
+
+// )}
 
 // {exercisesList.map((exerciseInfo) => (
 //   <ExerciseInfo
