@@ -7,7 +7,9 @@ import { loadEnv, connectDb, disconnectDB } from '@/config';
 
 loadEnv();
 
+import { workoutsRouter } from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
+
 // import { usersRouter, authenticationRouter } from '@/routers';
 // import { authenticationRouter } from '@/routers';
 
@@ -16,6 +18,7 @@ app
   .use(cors())
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
+  .use('/workouts', workoutsRouter)
   // .use('/users', usersRouter)
   // .use('/auth', authenticationRouter)
   .use(handleApplicationErrors);

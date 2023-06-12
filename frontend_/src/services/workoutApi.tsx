@@ -11,7 +11,7 @@ import api from './api';
 // }
 
 export async function saveWorkout(body) {
-  const response = await api.post('/workout', body);
+  const response = await api.post('/workouts', body);
 
   return response.data;
 }

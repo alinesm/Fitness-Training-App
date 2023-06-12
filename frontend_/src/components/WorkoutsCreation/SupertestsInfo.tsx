@@ -29,8 +29,6 @@ function SupertestsInfo({
     setExercisesList(updatedExercisesList);
   };
 
-  console.log('blaa', exercisesList);
-
   return (
     <>
       <div className='bg-blue-50 flex items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>

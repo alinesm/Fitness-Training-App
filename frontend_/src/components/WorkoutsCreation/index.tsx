@@ -22,19 +22,6 @@ function WorkoutsCreation() {
     restSecs: '',
   });
 
-  // async function handleSaveWorkout(e) {
-  //   e.preventDefault();
-  //   console.log('exercisesList', exercisesList);
-  //   const newData = {
-  //     workout: exercisesList,
-  //   };
-  //   // try {
-  //   //   await saveWorkout(newData);
-  //   //   toast('Reserva realizada!');
-  //   // } catch (err) {
-  //   //   toast('Não foi possível salvar suas informações!');
-  //   // }
-  // }
   function handleSaveExerciseInfo(updatedExerciseInfo, index) {
     setExercisesList((prevList) => {
       const newList = [...prevList];
@@ -43,17 +30,28 @@ function WorkoutsCreation() {
     });
   }
 
-  function handleSaveButtonClick() {
+  async function handleSaveButtonClick(e) {
+    e.preventDefault();
     exercisesList.forEach((exerciseInfo, index) => {
       handleSaveExerciseInfo(exerciseInfo, index);
     });
+    const newData = {
+      workout: exercisesList,
+    };
+    console.log('newData', exercisesList);
+    try {
+      await saveWorkout(newData);
+      toast('Reserva realizada!');
+    } catch (err) {
+      toast('Não foi possível salvar suas informações!');
+    }
   }
 
   console.log('exercisesList', exercisesList);
 
   return (
     <>
-      <button onClick={handleSaveButtonClick}>save</button>
+      <button onClick={(e) => handleSaveButtonClick(e)}>save</button>
       <div className='grid grid-cols-2 bg-slate-600 p-7 w-full'>
         {openModalSuperset ? (
           <div className='w-full h-fit bg-white'>
