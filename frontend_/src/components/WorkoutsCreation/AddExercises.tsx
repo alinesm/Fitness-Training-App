@@ -18,6 +18,7 @@ function AddExercises({
   const [exercises, setExercises] = useState([]); // exercisses from Api
   const [bodyPart, setBodyPart] = useState('all');
   const [bodyPartsList, setBodyPartsList] = useState([]);
+  // console.log('exerciselos', exercisesList);
 
   return (
     <div className=' bg-white border-l py-4 px-4'>

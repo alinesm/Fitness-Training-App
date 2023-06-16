@@ -15,3 +15,15 @@ export async function saveWorkout(body) {
 
   return response.data;
 }
+
+export async function getWorkoutById(workoutId) {
+  const response = await api.get(`/workouts/${workoutId}`);
+
+  return response.data;
+}
+
+export async function getListOfWorkouts() {
+  const response = await api.get('/workouts/');
+
+  return response.data;
+}

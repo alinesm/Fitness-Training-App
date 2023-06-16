@@ -1,4 +1,21 @@
-function ExerciseInfo({ exerciseInfo, index, onSaveExerciseInfo }) {
+import { FaTrash } from 'react-icons/fa';
+
+function ExerciseInfo({
+  exerciseInfo,
+  index,
+  onSaveExerciseInfo,
+  exercisesList,
+  setExercisesList,
+}) {
+  function handleDeleteExercise(id) {
+    // console.log(arr.map((item) => item.supertests ? item.supertests.map((subItem) => subItem) : item).flat())
+
+    const updatedExercise = exercisesList.filter(
+      (item) => item.exerciseId !== id,
+    );
+    setExercisesList(updatedExercise);
+  }
+
   return (
     <div className='bg-white flex items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
       <div className='w-20'>
@@ -67,6 +84,11 @@ function ExerciseInfo({ exerciseInfo, index, onSaveExerciseInfo }) {
             <option value='90'>90 sec</option>
           </select>
         </div>
+      </div>
+      <div className='py-8 flex gap-3'>
+        <FaTrash
+          onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
+        />
       </div>
     </div>
   );
@@ -175,11 +197,11 @@ function ExerciseInfo({ exerciseInfo, index, onSaveExerciseInfo }) {
 //             </select>
 //           </div>
 //         </div>
-//         <div className='py-8 flex gap-3'>
-//           <FaTrash
-//             onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
-//           />
-//         </div>
+// <div className='py-8 flex gap-3'>
+//   <FaTrash
+//     onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
+//   />
+// </div>
 //       </div>
 //     </>
 //   );

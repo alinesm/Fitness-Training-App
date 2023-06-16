@@ -3,6 +3,7 @@ import { FaPlusCircle } from 'react-icons/fa';
 import TableHead from './TableHead';
 import SupertestsInfo from './SupertestsInfo';
 import { useState } from 'react';
+import AddSupersetsExercises from './AddSupersetsExercises';
 
 function SupertestModal({
   setOpenModalSuperset,
@@ -22,9 +23,20 @@ function SupertestModal({
   //   setOpenModalSuperset(false);
   // }
 
+  // function handleCreateSupertest() {
+  //   const supertestObject = {
+  //     supertests: [{ supersetOf: numSets }, ...supersetsList],
+  //   };
+  //   const updatedExercisesList = [...exercisesList, supertestObject];
+  //   setExercisesList(updatedExercisesList);
+  //   setSupersetsList([]);
+  //   setOpenModalSuperset(false);
+  // }
+  console.log('super', supersetsList);
+
   function handleCreateSupertest() {
     const supertestObject = {
-      supertests: [{ supersetOf: numSets }, ...supersetsList],
+      supertests: [{ rounds: '' }, ...supersetsList],
     };
     const updatedExercisesList = [...exercisesList, supertestObject];
     setExercisesList(updatedExercisesList);
@@ -46,8 +58,8 @@ function SupertestModal({
             Create Supertest
           </div>
         </button>
-        <p>Superset of</p>
-        <input
+        {/* <p>Superset of</p> */}
+        {/* <input
           value={numSets}
           onChange={(e) => setNumSets(e.target.value)}
           className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm
@@ -56,14 +68,14 @@ function SupertestModal({
         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           type='number'
           placeholder='1'
-        />
+        /> */}
       </div>
 
       <div class='sm:rounded-lg'>
         <div class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <TableHead />
           {supersetsList.map((exerciseInfo, index) => (
-            <SupertestsInfo
+            <AddSupersetsExercises
               key={exerciseInfo.exerciseName}
               exercisesList={supersetsList}
               setExercisesList={setSupersetsList}

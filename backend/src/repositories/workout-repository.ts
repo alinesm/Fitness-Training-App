@@ -173,9 +173,22 @@ function getWorkoutById(workoutId: number) {
   });
 }
 
+async function getListOfWorkouts() {
+  const result = await prisma.workout.findMany({
+    select: {
+      id: true,
+      name: true,
+      description: true,
+    },
+  });
+
+  return result;
+}
+
 const workoutRepository = {
   createWorkoutData,
   getWorkoutById,
+  getListOfWorkouts,
 };
 
 export default workoutRepository;

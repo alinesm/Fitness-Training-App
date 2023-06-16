@@ -11,8 +11,10 @@ function WorkoutsCreation() {
   const [openModalCircuit, setOpenModalCircuit] = useState(false); //modal for circuit
   const [supersetsList, setSupersetsList] = useState([]);
   const [circuitList, setCircuitList] = useState([]); //circuit list added to workout
-  const [workoutsList, setWorkoutsList] = useState([]);
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
+  const [numRounds, setNumRounds] = useState('');
+  const [indexCircuitEdit, setIndexCircuitEdit] = useState(null); //index of circuit to be edited
+  const [isEditing, setIsEditing] = useState(false); //index of circuit to be edited
   const [teste, setTeste] = useState({
     exerciseId: '',
     exerciseGift: '',
@@ -47,7 +49,7 @@ function WorkoutsCreation() {
     }
   }
 
-  console.log('exercisesList', exercisesList);
+  // console.log('exercisesList', exercisesList);
 
   return (
     <>
@@ -67,10 +69,16 @@ function WorkoutsCreation() {
           <div className='w-full bg-white'>
             <CircuitModal
               circuitList={circuitList}
-              setOpenModalCircuit={setOpenModalCircuit}
               setCircuitList={setCircuitList}
+              setOpenModalCircuit={setOpenModalCircuit}
               exercisesList={exercisesList}
               setExercisesList={setExercisesList}
+              numRounds={numRounds}
+              setNumRounds={setNumRounds}
+              indexCircuitEdit={indexCircuitEdit}
+              setIndexCircuitEdit={setIndexCircuitEdit}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
             />
           </div>
         ) : (
@@ -79,11 +87,16 @@ function WorkoutsCreation() {
               exercisesList={exercisesList}
               setExercisesList={setExercisesList}
               setOpenModalSuperset={setOpenModalSuperset}
-              supersetsList={supersetsList}
               setOpenModalCircuit={setOpenModalCircuit}
-              teste={teste}
-              setTeste={setTeste}
               onSaveExerciseInfo={handleSaveExerciseInfo}
+              circuitList={circuitList}
+              setCircuitList={setCircuitList}
+              numRounds={numRounds}
+              setNumRounds={setNumRounds}
+              indexCircuitEdit={indexCircuitEdit}
+              setIndexCircuitEdit={setIndexCircuitEdit}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
             />
           </div>
         )}

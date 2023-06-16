@@ -23,7 +23,7 @@ function ExerciseCard({
   //   restSecs: '',
   // });
 
-  const maxLength = 32;
+  const maxLength = 13;
 
   function handleAddExercise() {
     const addExercise = {
@@ -32,6 +32,7 @@ function ExerciseCard({
       exerciseName: exercise.name,
       exerciseGift: exercise.gifUrl,
     };
+    // console.log('addExercise', addExercise);
     if (openModalSuperset) {
       setTeste(addExercise);
       setSupersetsList([...supersetsList, addExercise]);
@@ -44,7 +45,7 @@ function ExerciseCard({
     }
   }
   // console.log('dtaa', teste);
-  // console.log('exercisesList', exercisesList);
+  // console.log('exercisesListsss', exercisesList);
   // console.log('supersetsList', supersetsList);
 
   return (

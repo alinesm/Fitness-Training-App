@@ -1,6 +1,3 @@
-import React from 'react';
-import { FaTrash } from 'react-icons/fa';
-
 function CircuitsInfo({
   exerciseInfo,
   index,
@@ -69,6 +66,7 @@ function CircuitsInfo({
             </select>
           </div>
         </div>
+        <div className='py-8 flex gap-3'></div>
       </div>
     </>
   );

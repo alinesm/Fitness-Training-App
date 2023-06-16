@@ -1,3 +1,4 @@
+import { Exercise, Supertest, Circuit } from '@prisma/client';
 import workoutRepository from '@/repositories/workout-repository';
 
 async function postWorkout(workout: any) {
@@ -7,79 +8,308 @@ async function postWorkout(workout: any) {
 }
 
 async function getWorkoutById(workoutId: number) {
-  const workout = await workoutRepository.getWorkoutById(workoutId);
+  const data = await workoutRepository.getWorkoutById(workoutId);
+  const result: {
+    circuits?: any[];
+    supertests?: any[];
+    rest?: string;
+    exerciseId?: string;
+    exerciseGift?: string;
+    exerciseName?: string;
+    sets?: string;
+    text?: string;
+    restSecs?: string;
+  }[] = [];
 
-  const output = [{ workoutId: workout.id }];
-  const sortedExercises = workout.exercises.sort((a, b) => a.workoutOrder - b.workoutOrder);
+  const exercises = data.exercises.sort((a, b) => a.workoutOrder - b.workoutOrder);
+  console.log(exercises);
 
-  const supertestsMap = new Map();
-  const circuitsMap = new Map();
+  // exercises.map((exercise) => {
+  //   if (exercise.circuitId) {
+  //     const circuitExercises = exercises.filter((exercise) => exercise.circuitId !== null);
+  //     const circuitGroups = groupBy(circuitExercises, 'circuitId');
+  //     for (const circuitId in circuitGroups) {
+  //       result.push({
+  //         circuits: [
+  //           {
+  //             rounds: circuitGroups[circuitId][0].Circuit.rounds,
+  //           },
+  //           ...circuitGroups[circuitId].map(formatExercise),
+  //         ],
+  //       });
+  //     }
+  //   } else if (exercise.supertestId) {
+  //     const supertestExercises = exercises.filter((exercise) => exercise.supertestId !== null);
+  //     const supertestGroups = groupBy(supertestExercises, 'supertestId');
 
-  // Iterate over the sorted exercises and transform each exercise object
-  sortedExercises.forEach((exercise) => {
-    if (exercise.supertestId) {
-      if (!supertestsMap.has(exercise.supertestId)) {
-        supertestsMap.set(exercise.supertestId, {
-          supertestId: exercise.Supertest.id,
-          rounds: exercise.Supertest.rounds,
-          workoutOrder: exercise.workoutOrder,
-          exercises: [],
-        });
-      }
+  //     for (const supertestId in supertestGroups) {
+  //       result.push({
+  //         supertests: [
+  //           {
+  //             rounds: supertestGroups[supertestId][0].Supertest.rounds,
+  //           },
+  //           ...supertestGroups[supertestId].map(formatExercise),
+  //         ],
+  //       });
+  //     }
+  //   } else if (exercise.exerciseId === null) {
+  //     const restExercises = exercises.filter(
+  //       (exercise) => exercise.circuitId === null && exercise.supertestId === null,
+  //     );
 
-      supertestsMap.get(exercise.supertestId).exercises.push({
-        id: exercise.id,
-        exerciseId: exercise.exerciseId,
-        exerciseGift: exercise.exerciseGift,
-        exerciseName: exercise.exerciseName,
-        sets: exercise.sets,
-        text: exercise.text,
-        restSecs: exercise.restSecs,
-      });
-    } else if (exercise.circuitId) {
-      if (!circuitsMap.has(exercise.circuitId)) {
-        circuitsMap.set(exercise.circuitId, {
-          circuitId: exercise.Circuit.id,
-          rounds: exercise.Circuit.rounds,
-          workoutOrder: exercise.workoutOrder,
-          exercises: [],
-        });
-      }
+  //     for (const restExercise of restExercises) {
+  //       if (restExercise.exerciseName === 'restTime') {
+  //         result.push({
+  //           rest: restExercise.restSecs,
+  //         });
+  //       } else {
+  //         result.push(formatExercise(restExercise));
+  //       }
+  //     }
+  //   }
+  // });
 
-      circuitsMap.get(exercise.circuitId).exercises.push({
-        id: exercise.id,
-        exerciseId: exercise.exerciseId,
-        exerciseGift: exercise.exerciseGift,
-        exerciseName: exercise.exerciseName,
-        sets: exercise.sets,
-        text: exercise.text,
-        restSecs: exercise.restSecs,
+  // return result;
+  // }
+
+  const circuitExercises = exercises.filter((exercise) => exercise.circuitId !== null);
+  const circuitGroups = groupBy(circuitExercises, 'circuitId');
+
+  for (const circuitId in circuitGroups) {
+    result.push({
+      circuits: [
+        {
+          rounds: circuitGroups[circuitId][0].Circuit.rounds,
+        },
+        ...circuitGroups[circuitId].map(formatExercise),
+      ],
+    });
+  }
+
+  const supertestExercises = exercises.filter((exercise) => exercise.supertestId !== null);
+  const supertestGroups = groupBy(supertestExercises, 'supertestId');
+
+  for (const supertestId in supertestGroups) {
+    result.push({
+      supertests: [
+        {
+          rounds: supertestGroups[supertestId][0].Supertest.rounds,
+        },
+        ...supertestGroups[supertestId].map(formatExercise),
+      ],
+    });
+  }
+
+  const restExercises = exercises.filter((exercise) => exercise.circuitId === null && exercise.supertestId === null);
+
+  for (const restExercise of restExercises) {
+    if (restExercise.exerciseName === 'restTime') {
+      result.push({
+        rest: restExercise.restSecs,
+        ...restExercise,
       });
     } else {
-      // Otherwise, add the exercise object to the output array directly
-      // const { workoutId, ...rest } = exercise;
-      const { circuitId, supertestId, Circuit, Supertest, ...rest } = exercise;
-      output.push({ ...rest });
+      result.push(formatExercise(restExercise));
     }
-  });
+  }
 
-  // Convert the supertestsMap values to an array and add them to the output array
-  const supertests = Array.from(supertestsMap.values());
-  output.push(...supertests);
+  const compareWorkoutOrder = (
+    a: { circuits: any[]; supertests: any[] },
+    b: { circuits: any[]; supertests: any[] },
+  ) => {
+    const orderA =
+      (a.circuits && a.circuits.find((circuit) => circuit.workoutOrder !== undefined)) ||
+      (a.supertests && a.supertests.find((supertest) => supertest.workoutOrder !== undefined)) ||
+      a;
 
-  // Convert the circuitsMap values to an array and add them to the output array
-  const circuits = Array.from(circuitsMap.values());
-  output.push(...circuits);
+    const orderB =
+      (b.circuits && b.circuits.find((circuit) => circuit.workoutOrder !== undefined)) ||
+      (b.supertests && b.supertests.find((supertest) => supertest.workoutOrder !== undefined)) ||
+      b;
 
-  // Print the transformed output
-  console.log(output);
+    return orderA.workoutOrder - orderB.workoutOrder;
+  };
 
-  return output;
+  result.sort(compareWorkoutOrder);
+
+  return result;
+}
+
+function groupBy(array: any[], property: string) {
+  return array.reduce((acc: { [x: string]: any[] }, obj: { [x: string]: any }) => {
+    const key = obj[property];
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(obj);
+    return acc;
+  }, {});
+}
+
+function formatExercise(exercise: Exercise & { Supertest: Supertest; Circuit: Circuit }) {
+  return {
+    exerciseId: exercise.exerciseId,
+    exerciseGift: exercise.exerciseGift,
+    exerciseName: exercise.exerciseName,
+    sets: exercise.sets,
+    text: exercise.text,
+    restSecs: exercise.restSecs,
+    workoutOrder: exercise.workoutOrder,
+  };
+}
+
+// async function getWorkoutById(workoutId: number) {
+//   const data = await workoutRepository.getWorkoutById(workoutId);
+//   let result = [];
+
+//   let exercises = data.exercises.sort((a, b) => a.workoutOrder - b.workoutOrder);
+
+//   let circuitExercises = exercises.filter((exercise) => exercise.circuitId !== null);
+//   let circuitGroups = groupBy(circuitExercises, 'circuitId');
+
+//   for (let circuitId in circuitGroups) {
+//     result.push({
+//       circuits: [
+//         {
+//           rounds: circuitGroups[circuitId][0].Circuit.rounds,
+//         },
+//         ...circuitGroups[circuitId].map(formatExercise),
+//       ],
+//     });
+//   }
+
+//   let supertestExercises = exercises.filter((exercise) => exercise.supertestId !== null);
+//   let supertestGroups = groupBy(supertestExercises, 'supertestId');
+
+//   for (let supertestId in supertestGroups) {
+//     result.push({
+//       supertests: [
+//         {
+//           rounds: supertestGroups[supertestId][0].Supertest.rounds,
+//         },
+//         ...supertestGroups[supertestId].map(formatExercise),
+//       ],
+//     });
+//   }
+
+//   let restExercises = exercises.filter((exercise) => exercise.circuitId === null && exercise.supertestId === null);
+
+//   for (let restExercise of restExercises) {
+//     if (restExercise.exerciseName === 'restTime') {
+//       result.push({
+//         rest: restExercise.restSecs,
+//       });
+//     } else {
+//       result.push(formatExercise(restExercise));
+//     }
+//   }
+
+//   return result;
+// }
+
+// function groupBy(array: any[], property: string) {
+//   return array.reduce((acc: { [x: string]: any[] }, obj: { [x: string]: any }) => {
+//     let key = obj[property];
+//     if (!acc[key]) {
+//       acc[key] = [];
+//     }
+//     acc[key].push(obj);
+//     return acc;
+//   }, {});
+// }
+
+// function formatExercise(exercise: Exercise & { Supertest: Supertest; Circuit: Circuit }) {
+//   return {
+//     exerciseId: exercise.exerciseId,
+//     exerciseGift: exercise.exerciseGift,
+//     exerciseName: exercise.exerciseName,
+//     sets: exercise.sets,
+//     text: exercise.text,
+//     restSecs: exercise.restSecs,
+//   };
+// }
+
+// async function getWorkoutById(workoutId: number) {
+//   const workout = await workoutRepository.getWorkoutById(workoutId);
+
+//   const output = [{ workoutId: workout.id }];
+//   workout.exercises.sort((a, b) => a.workoutOrder - b.workoutOrder);
+
+//   const supertestsMap = new Map();
+//   const circuitsMap = new Map();
+
+//   // Iterate over the sorted exercises and transform each exercise object
+//   workout.exercises.forEach((exercise) => {
+//     if (exercise.supertestId) {
+//       if (!supertestsMap.has(exercise.supertestId)) {
+//         supertestsMap.set(exercise.supertestId, {
+//           supertestId: exercise.Supertest.id,
+//           rounds: exercise.Supertest.rounds,
+//           workoutOrder: exercise.workoutOrder,
+//           exercises: [],
+//         });
+//       }
+
+//       supertestsMap.get(exercise.supertestId).exercises.push({
+//         id: exercise.id,
+//         exerciseId: exercise.exerciseId,
+//         exerciseGift: exercise.exerciseGift,
+//         exerciseName: exercise.exerciseName,
+//         sets: exercise.sets,
+//         text: exercise.text,
+//         restSecs: exercise.restSecs,
+//       });
+//     } else if (exercise.circuitId) {
+//       if (!circuitsMap.has(exercise.circuitId)) {
+//         circuitsMap.set(exercise.circuitId, {
+//           circuitId: exercise.Circuit.id,
+//           rounds: exercise.Circuit.rounds,
+//           workoutOrder: exercise.workoutOrder,
+//           exercises: [],
+//         });
+//       }
+
+//       circuitsMap.get(exercise.circuitId).exercises.push({
+//         id: exercise.id,
+//         exerciseId: exercise.exerciseId,
+//         exerciseGift: exercise.exerciseGift,
+//         exerciseName: exercise.exerciseName,
+//         sets: exercise.sets,
+//         text: exercise.text,
+//         restSecs: exercise.restSecs,
+//       });
+//     } else {
+//       // Otherwise, add the exercise object to the output array directly
+//       // const { workoutId, ...rest } = exercise;
+//       const { circuitId, supertestId, Circuit, Supertest, ...rest } = exercise;
+//       output.push({ ...rest });
+//     }
+//   });
+
+//   // Convert the supertestsMap values to an array and add them to the output array
+//   const supertests = Array.from(supertestsMap.values()).sort((a, b) => a.workoutOrder - b.workoutOrder);
+//   output.push(...supertests);
+
+//   // Convert the circuitsMap values to an array and add them to the output array
+//   const circuits = Array.from(circuitsMap.values()).sort((a, b) => a.workoutOrder - b.workoutOrder);
+//   output.push(...circuits);
+
+//   // Print the transformed output
+//   // console.log(output);
+
+//   return output;
+// }
+
+async function getListOfWorkouts() {
+  const workouts = await workoutRepository.getListOfWorkouts();
+
+  return workouts;
 }
 
 const workoutService = {
   postWorkout,
   getWorkoutById,
+  getListOfWorkouts,
 };
 
 export default workoutService;

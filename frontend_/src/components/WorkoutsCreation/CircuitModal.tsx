@@ -9,19 +9,51 @@ function CircuitModal({
   setOpenModalCircuit,
   exercisesList,
   setExercisesList,
+  numRounds,
+  setNumRounds,
+  indexCircuitEdit,
+  setIndexCircuitEdit,
+  isEditing,
+  setIsEditing,
 }) {
-  const [numRounds, setNumRounds] = useState('');
+  // const [numRounds, setNumRounds] = useState('');
+
+  //create a condition to edit the circuit not create a new one
 
   function handleCreateCircuit() {
-    const circuitObject = {
-      circuits: [{ circuitOf: numRounds }, ...circuitList],
-    };
-    const updatedExercisesList = [...exercisesList, circuitObject];
-    setExercisesList(updatedExercisesList);
+    const updatedExercisesList = [...exercisesList];
+
+    if (isEditing) {
+      updatedExercisesList[indexCircuitEdit].circuits = [
+        { circuitOf: numRounds },
+        ...circuitList,
+      ];
+      setExercisesList(updatedExercisesList);
+      setIsEditing(false);
+    } else {
+      const circuitObject = {
+        circuits: [{ circuitOf: numRounds }, ...circuitList],
+      };
+      setExercisesList([...updatedExercisesList, circuitObject]);
+    }
+
     setCircuitList([]);
+    // setNumRounds('');
     setOpenModalCircuit(false);
+    setIndexCircuitEdit(null);
   }
-  console.log('lista com circuitos', exercisesList);
+  console.log('exerciseList', exercisesList);
+
+  // function handleCreateCircuit() {
+  //   const circuitObject = {
+  //     circuits: [{ circuitOf: numRounds }, ...circuitList],
+  //   };
+  //   const updatedExercisesList = [...exercisesList, circuitObject];
+
+  //   setExercisesList(updatedExercisesList);
+  //   setCircuitList([]);
+  //   setOpenModalCircuit(false);
+  // }
 
   // function handleCreateCircuit() {
   //   const combinedArray = [...exercisesList, { circuits: [...circuitList] }];
