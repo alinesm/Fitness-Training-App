@@ -12,7 +12,7 @@ function WorkoutsCreation() {
   const [supersetsList, setSupersetsList] = useState([]);
   const [circuitList, setCircuitList] = useState([]); //circuit list added to workout
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
-  const [numRounds, setNumRounds] = useState('');
+  const [numRounds, setNumRounds] = useState('1');
   const [indexCircuitEdit, setIndexCircuitEdit] = useState(null); //index of circuit to be edited
   const [isEditing, setIsEditing] = useState(false); //index of circuit to be edited
   const [teste, setTeste] = useState({
@@ -54,7 +54,7 @@ function WorkoutsCreation() {
   return (
     <>
       <button onClick={(e) => handleSaveButtonClick(e)}>save</button>
-      <div className='grid grid-cols-2 bg-slate-600 p-7 w-full'>
+      <div className='grid grid-cols-2 mix-blend-multiply bg-slate-600 p-7 w-full'>
         {openModalSuperset ? (
           <div className='w-full h-fit bg-white'>
             <SupertestModal
@@ -66,7 +66,7 @@ function WorkoutsCreation() {
             />
           </div>
         ) : openModalCircuit ? (
-          <div className='w-full bg-white'>
+          <div className='w-10/12 mx-auto h-fit rounded-md bg-white'>
             <CircuitModal
               circuitList={circuitList}
               setCircuitList={setCircuitList}

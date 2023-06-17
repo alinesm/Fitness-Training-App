@@ -17,7 +17,7 @@ function ExerciseInfo({
   }
 
   return (
-    <div className='bg-white flex items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+    <div className='bg-white flex items-center px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
       <div className='w-20'>
         <img
           className='w-full h-full'
@@ -25,68 +25,68 @@ function ExerciseInfo({
           alt='gif'
         />
       </div>
-      <div className='px-1 text-gray-900 dark:text-white capitalize'>
-        {exerciseInfo.exerciseName}
+      <div className='pl-3 w-36 text-gray-900 dark:text-white capitalize'>
+        {exerciseInfo.exerciseName.length <= 13
+          ? exerciseInfo.exerciseName
+          : `${exerciseInfo.exerciseName.substring(0, 13)}...`}
       </div>
-      <div>
-        <div className='flex items-center space-x-3'>
-          <div>
-            <input
-              value={exerciseInfo.sets}
-              onChange={(e) => {
-                const updatedExerciseInfo = {
-                  ...exerciseInfo,
-                  sets: e.target.value,
-                };
-                onSaveExerciseInfo(updatedExerciseInfo, index);
-              }}
-              type='number'
-              className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              placeholder='1'
-              required
-            />
-          </div>
-        </div>
+
+      <div className='flex w-20 text-gray-900 items-center space-x-3'>
+        <input
+          value={exerciseInfo.sets}
+          onChange={(e) => {
+            const updatedExerciseInfo = {
+              ...exerciseInfo,
+              sets: e.target.value,
+            };
+            onSaveExerciseInfo(updatedExerciseInfo, index);
+          }}
+          type='number'
+          min={1}
+          className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          placeholder='1'
+          required
+        />
       </div>
-      <div className='font-semibold text-gray-900 dark:text-white'>
-        <div>
-          <input
-            value={exerciseInfo.text}
-            onChange={(e) => {
-              const updatedExerciseInfo = {
-                ...exerciseInfo,
-                text: e.target.value,
-              };
-              onSaveExerciseInfo(updatedExerciseInfo, index);
-            }}
-            type='text'
-            className='bg-gray-50 w-32 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            placeholder='reps, weight, time, etc'
-            required
-          />
-        </div>
+
+      <div className='w-8 text-lg'>X</div>
+      <div className='w-48 dark:text-white text-gray-900 '>
+        <input
+          value={exerciseInfo.text}
+          onChange={(e) => {
+            const updatedExerciseInfo = {
+              ...exerciseInfo,
+              text: e.target.value,
+            };
+            onSaveExerciseInfo(updatedExerciseInfo, index);
+          }}
+          type='text'
+          className='bg-gray-50 w-40 border border-gray-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          placeholder='reps, weight, time, etc'
+          required
+        />
       </div>
-      <div className='text-gray-900 dark:text-white'>
-        <div>
-          <select
-            value={exerciseInfo.restSecs}
-            onChange={(e) => {
-              const updatedExerciseInfo = {
-                ...exerciseInfo,
-                restSecs: e.target.value,
-              };
-              onSaveExerciseInfo(updatedExerciseInfo, index);
-            }}
-            className='bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-          >
-            <option value='none'>None</option>
-            <option value='45'>45 sec</option>
-            <option value='90'>90 sec</option>
-          </select>
-        </div>
+      <div className='w-36 text-gray-900  dark:text-white'>
+        <select
+          value={exerciseInfo.restSecs}
+          onChange={(e) => {
+            const updatedExerciseInfo = {
+              ...exerciseInfo,
+              restSecs: e.target.value,
+            };
+            onSaveExerciseInfo(updatedExerciseInfo, index);
+          }}
+          className='bg-gray-50 w-24 border border-gray-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+        >
+          <option value='None'>None</option>
+          <option value='45 secs'>45 secs</option>
+          <option value='90 secs'>90 secs</option>
+        </select>
       </div>
-      <div className='py-8 flex gap-3'>
+      <div className='py-8'>
         <FaTrash
+          size={16}
+          style={{ cursor: 'pointer' }}
           onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
         />
       </div>
