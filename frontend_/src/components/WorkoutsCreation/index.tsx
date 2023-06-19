@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import AddExercises from './AddExercises';
 import Table from './Table';
-import SupertestModal from './SupertestModal';
-import CircuitModal from './CircuitModal';
 import { toast } from 'react-toastify';
 import { saveWorkout } from '../../services/workoutApi';
+import { FaWindowClose } from 'react-icons/fa';
 
-function WorkoutsCreation() {
+function WorkoutsCreation({ setOpenCreateWorkout }) {
   const [openModalSuperset, setOpenModalSuperset] = useState(false);
   const [openModalCircuit, setOpenModalCircuit] = useState(false); //modal for circuit
   const [supersetsList, setSupersetsList] = useState([]);
   const [circuitList, setCircuitList] = useState([]); //circuit list added to workout
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
-  const [numRounds, setNumRounds] = useState('1');
-  const [indexCircuitEdit, setIndexCircuitEdit] = useState(null); //index of circuit to be edited
-  const [isEditing, setIsEditing] = useState(false); //index of circuit to be edited
   const [teste, setTeste] = useState({
     exerciseId: '',
     exerciseGift: '',
@@ -51,70 +47,62 @@ function WorkoutsCreation() {
 
   // console.log('exercisesList', exercisesList);
 
-  return (
-    <>
-      <button onClick={(e) => handleSaveButtonClick(e)}>save</button>
-      <div className='grid grid-cols-2 mix-blend-multiply bg-slate-600 p-7 w-full'>
-        {openModalSuperset ? (
-          <div className='w-full h-fit bg-white'>
-            <SupertestModal
-              supersetsList={supersetsList}
-              setOpenModalSuperset={setOpenModalSuperset}
-              setSupersetsList={setSupersetsList}
-              exercisesList={exercisesList}
-              setExercisesList={setExercisesList}
-            />
-          </div>
-        ) : openModalCircuit ? (
-          <div className='w-10/12 mx-auto h-fit rounded-md bg-white'>
-            <CircuitModal
-              circuitList={circuitList}
-              setCircuitList={setCircuitList}
-              setOpenModalCircuit={setOpenModalCircuit}
-              exercisesList={exercisesList}
-              setExercisesList={setExercisesList}
-              numRounds={numRounds}
-              setNumRounds={setNumRounds}
-              indexCircuitEdit={indexCircuitEdit}
-              setIndexCircuitEdit={setIndexCircuitEdit}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-          </div>
-        ) : (
-          <div className='w-full bg-white'>
-            <Table
-              exercisesList={exercisesList}
-              setExercisesList={setExercisesList}
-              setOpenModalSuperset={setOpenModalSuperset}
-              setOpenModalCircuit={setOpenModalCircuit}
-              onSaveExerciseInfo={handleSaveExerciseInfo}
-              circuitList={circuitList}
-              setCircuitList={setCircuitList}
-              numRounds={numRounds}
-              setNumRounds={setNumRounds}
-              indexCircuitEdit={indexCircuitEdit}
-              setIndexCircuitEdit={setIndexCircuitEdit}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
-          </div>
-        )}
+  // <div className='absolute w-full inset-0 z-40 flex bg-black bg-opacity-80'>
+  // <div
+  //   className={
+  //     (visible ? '' : 'relative') +
+  //     'h-fit  mt-20 rounded-sm mx-auto w-10/12 overflow-y-auto bg-white transition-transform'
+  //   }
+  // >
 
-        <AddExercises
-          exercisesList={exercisesList}
-          setExercisesList={setExercisesList}
-          openModalSuperset={openModalSuperset}
-          setSupersetsList={setSupersetsList}
-          supersetsList={supersetsList}
-          circuitList={circuitList}
-          setCircuitList={setCircuitList}
-          openModalCircuit={openModalCircuit}
-          teste={teste}
-          setTeste={setTeste}
-        />
+  return (
+    <div className='flex flex-col absolute h-fit w-full inset-0 z-40 bg-black bg-opacity-70'>
+      <div className='px-4 rounded-t-lg justify-between flex gap-3 bg-gray-400 mt-10  items-center text-white  mx-auto w-11/12 '>
+        <button
+          className='uppercase text-white px-3 text-center my-1 bg-gray-500 rounded-md'
+          onClick={(e) => handleSaveButtonClick(e)}
+        >
+          save
+        </button>
+        <div
+          onClick={() => setOpenCreateWorkout(false)}
+          className='cursor-pointer'
+        >
+          <FaWindowClose size={25} />
+        </div>
       </div>
-    </>
+
+      <div className='h-fit rounded-b-lg mx-auto w-11/12 overflow-y-auto bg-white transition-transform'>
+        <div className='grid grid-cols-2  w-full'>
+          <Table
+            exercisesList={exercisesList}
+            setExercisesList={setExercisesList}
+            setOpenModalSuperset={setOpenModalSuperset}
+            openModalSuperset={openModalSuperset}
+            setOpenModalCircuit={setOpenModalCircuit}
+            openModalCircuit={openModalCircuit}
+            circuitList={circuitList}
+            setCircuitList={setCircuitList}
+            supersetsList={supersetsList}
+            setSupersetsList={setSupersetsList}
+            onSaveExerciseInfo={handleSaveExerciseInfo}
+          />
+
+          <AddExercises
+            exercisesList={exercisesList}
+            setExercisesList={setExercisesList}
+            openModalSuperset={openModalSuperset}
+            setSupersetsList={setSupersetsList}
+            supersetsList={supersetsList}
+            circuitList={circuitList}
+            setCircuitList={setCircuitList}
+            openModalCircuit={openModalCircuit}
+            teste={teste}
+            setTeste={setTeste}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

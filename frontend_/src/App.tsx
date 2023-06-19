@@ -16,7 +16,7 @@ import ExerciseDetail from './pages/ExerciseDetail';
 export default function App() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/exercise/:id' element={<ExerciseDetail />} />

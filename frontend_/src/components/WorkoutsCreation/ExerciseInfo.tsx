@@ -18,20 +18,20 @@ function ExerciseInfo({
 
   return (
     <div className='bg-white flex items-center px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
-      <div className='w-20'>
+      <div className='w-20 '>
         <img
           className='w-full h-full'
           src={exerciseInfo.exerciseGift}
           alt='gif'
         />
       </div>
-      <div className='pl-3 w-36 text-gray-900 dark:text-white capitalize'>
+      <div className='pl-3 w-36  text-gray-900 dark:text-white capitalize'>
         {exerciseInfo.exerciseName.length <= 13
           ? exerciseInfo.exerciseName
           : `${exerciseInfo.exerciseName.substring(0, 13)}...`}
       </div>
 
-      <div className='flex w-20 text-gray-900 items-center space-x-3'>
+      <div className='w-16  text-gray-900'>
         <input
           value={exerciseInfo.sets}
           onChange={(e) => {
@@ -43,14 +43,14 @@ function ExerciseInfo({
           }}
           type='number'
           min={1}
-          className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          className='bg-gray-50  w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           placeholder='1'
           required
         />
       </div>
 
-      <div className='w-8 text-lg'>X</div>
-      <div className='w-48 dark:text-white text-gray-900 '>
+      <div className='w-4 text-lg text-gray-500'>X</div>
+      <div className='w-44 dark:text-white text-gray-900 '>
         <input
           value={exerciseInfo.text}
           onChange={(e) => {
@@ -87,6 +87,7 @@ function ExerciseInfo({
         <FaTrash
           size={16}
           style={{ cursor: 'pointer' }}
+          color='gray'
           onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
         />
       </div>

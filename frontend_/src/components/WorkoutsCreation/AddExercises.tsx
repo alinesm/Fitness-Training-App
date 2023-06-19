@@ -21,7 +21,7 @@ function AddExercises({
   // console.log('exerciselos', exercisesList);
 
   return (
-    <div className=' bg-white border-l py-4 px-4'>
+    <div className=' bg-white border-l py-4 pl-4'>
       <div class='flex mb-4 items-center justify-between overflow-y-auto sm:rounded-lg'>
         <div>
           <SearchExercises

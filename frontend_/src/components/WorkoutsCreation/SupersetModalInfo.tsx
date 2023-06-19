@@ -1,9 +1,9 @@
-function CircuitModalInfo({ exerciseInfo }) {
+function SupersetModalInfo({ exerciseInfo }) {
   const maxLength = 13;
 
   return (
     <>
-      <div className='bg-green-50 flex items-center px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>
+      <div className='bg-blue-50 flex items-center px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>
         <div className='w-20'>
           <img
             className='w-full h-full'
@@ -37,7 +37,7 @@ function CircuitModalInfo({ exerciseInfo }) {
   );
 }
 
-export default CircuitModalInfo;
+export default SupersetModalInfo;
 
 // function CircuitsInfo({ exercisesList, setExercisesList, exerciseInfo }) {
 //   // console.log('exerciseInfo', exerciseInfo);

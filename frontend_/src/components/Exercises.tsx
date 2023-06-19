@@ -61,7 +61,7 @@ function Exercises({
   // console.log('bodypart', bodyPart);
 
   return (
-    <div className='flex flex-wrap gap-4'>
+    <div className='flex flex-wrap gap-2'>
       {isLoading ? (
         <div>Loading...</div>
       ) : (

@@ -29,7 +29,7 @@ function WorkoutsList({
 
   return (
     <div>
-      <button onClick={() => setOpenCreateWorkout(true)}>new workout</button>
+      {/* <button onClick={() => setOpenCreateWorkout(true)}>new workout</button> */}
       {workoutsList.length !== 0 && (
         <div>
           {workoutsList?.map((workout) => (

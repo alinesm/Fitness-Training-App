@@ -49,10 +49,10 @@ function ExerciseCard({
   // console.log('supersetsList', supersetsList);
 
   return (
-    <div className='flex flex-col items-center  w-40 relative rounded-md shadow-md h-60 border px-2 py-3 bg-gray-100'>
+    <div className='flex flex-col items-center  w-[10rem] relative rounded-md shadow-md h-56 border px-2 py-3 bg-gray-100'>
       <Link className='exercise-card' to={`/exercise/${exercise.id}`}>
         <img
-          className='w-36 rounded-md shadow-sm h-32'
+          className='w-32 rounded-md shadow-sm h-32'
           src={exercise.gifUrl}
           alt={exercise.name}
         />
@@ -72,7 +72,7 @@ function ExerciseCard({
       </p>
       <button
         onClick={handleAddExercise}
-        class='absolute right-1 top-1 px-1 h-fit text-gray-400 bg-white  hover:bg-gray-200 hover:text-gray-900 text-3xl rounded-md items-center dark:hover:bg-gray-600 dark:hover:text-white'
+        className='absolute right-1 top-1 px-2 h-fit text-gray-400 bg-white  hover:bg-gray-200 hover:text-gray-900 text-3xl rounded-md items-center dark:hover:bg-gray-600 dark:hover:text-white'
       >
         +
       </button>
