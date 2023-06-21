@@ -19,6 +19,12 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
     text: '',
     restSecs: '',
   });
+  const [workOutItialInfo, setWorkOutItialInfo] = useState({
+    workoutName: '',
+    goal: '',
+    frequency: '',
+    description: '',
+  });
 
   function handleSaveExerciseInfo(updatedExerciseInfo, index) {
     setExercisesList((prevList) => {
@@ -30,30 +36,28 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
 
   async function handleSaveButtonClick(e) {
     e.preventDefault();
+
+    if (exercisesList.length === 0) {
+      setOpenCreateWorkout(false);
+    }
+
     exercisesList.forEach((exerciseInfo, index) => {
       handleSaveExerciseInfo(exerciseInfo, index);
     });
     const newData = {
-      workout: exercisesList,
+      workout: [{ workOutItialInfo: workOutItialInfo }, exercisesList],
     };
-    console.log('newData', exercisesList);
+
     try {
-      await saveWorkout(newData);
+      const clientId = 2;
+      await saveWorkout(newData, clientId);
+      setOpenCreateWorkout(false);
+      console.log('newData', newData);
       toast('Reserva realizada!');
     } catch (err) {
       toast('Não foi possível salvar suas informações!');
     }
   }
-
-  // console.log('exercisesList', exercisesList);
-
-  // <div className='absolute w-full inset-0 z-40 flex bg-black bg-opacity-80'>
-  // <div
-  //   className={
-  //     (visible ? '' : 'relative') +
-  //     'h-fit  mt-20 rounded-sm mx-auto w-10/12 overflow-y-auto bg-white transition-transform'
-  //   }
-  // >
 
   return (
     <div className='flex flex-col absolute h-fit w-full inset-0 z-40 bg-black bg-opacity-70'>
@@ -86,6 +90,8 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
             supersetsList={supersetsList}
             setSupersetsList={setSupersetsList}
             onSaveExerciseInfo={handleSaveExerciseInfo}
+            workOutItialInfo={workOutItialInfo}
+            setWorkOutItialInfo={setWorkOutItialInfo}
           />
 
           <AddExercises

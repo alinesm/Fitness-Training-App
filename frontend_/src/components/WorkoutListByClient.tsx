@@ -1,15 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import avatar from '../assets/avatar.jpg';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import {
+  deleteWorkout,
+  getListOfWorkouts,
+  getListOfWorkoutsByClientId,
+  getWorkoutById,
+} from '../services/workoutApi';
+import { toast } from 'react-toastify';
 
-function WorkoutListByClient({ setOpenCreateWorkout }) {
-  function handleDeleteWorkout(id) {
-    console.log('id', id);
+function WorkoutListByClient({
+  setOpenCreateWorkout,
+  openCreateWorkout,
+  setWorkoutTobeEdited,
+  workoutTobeEdited,
+}) {
+  const [workoutsListByClient, setWorkoutsListByClient] = useState([]);
+
+  async function getWorkouts() {
+    const data = await getListOfWorkoutsByClientId(2);
+    setWorkoutsListByClient(data);
+  }
+  async function handleDeleteWorkout(id) {
+    try {
+      await deleteWorkout(id);
+      await getWorkouts();
+      // setOpenCreateWorkout(false);
+      // console.log('newData', newData);
+      toast('deleted!');
+    } catch (err) {
+      toast('Não foi possível salvar suas informações!');
+    }
   }
 
-  function handleDeleteEdit(id) {
-    console.log('id', id);
+  useEffect(() => {
+    //include client id
+
+    getWorkouts();
+  }, [openCreateWorkout]);
+  console.log('workoutsList', workoutsListByClient);
+
+  async function handleGetWorkoutsByClient() {
+    //pegar os exercicios do workout e renderizar direitinho
   }
+
+  async function handleEditWorkout(id) {
+    console.log(id);
+    setOpenCreateWorkout(true);
+    const editWorkout = await getWorkoutById(id);
+    console.log('edit', editWorkout);
+
+    setWorkoutTobeEdited(editWorkout);
+  }
+  console.log('workoutTobeEdited', workoutTobeEdited);
 
   return (
     <div className='pt-6 bg-gray-100 ml-20 h-screen'>
@@ -42,55 +85,42 @@ function WorkoutListByClient({ setOpenCreateWorkout }) {
               <span className='sm:text-left text-right'>Qty Exercises</span>
               <span className='hidden md:grid'>Goal</span>
               <span className='sm:text-left text-right'>Frequency</span>
-              <span className='hidden md:grid'>Last time</span>
+              <span className='hidden md:grid'>Last Done</span>
               <span>Actions</span>
             </div>
             <ul>
-              <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-                <p className=''>workout nameeee</p>
-                <p>8</p>
-                <p>training superior part</p>
-                <p>once a week</p>
-                <p className='hidden md:flex'>15 min ago</p>
-                <div className='flex gap-2'>
-                  <button onClick={() => handleDeleteWorkout(workout.id)}>
-                    <FaTrash color='gray' />
-                  </button>
-                  <button onClick={() => handleDeleteEdit(workout.id)}>
-                    <FaEdit color='gray' />
-                  </button>
-                </div>
-              </li>
-              <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-                <p className=''>workout name</p>
-                <p>8</p>
-                <p>training superior part</p>
-                <p>once a week</p>
-                <p className='hidden md:flex'>15 min ago</p>
-                <div className='flex gap-2'>
-                  <button>
-                    <FaTrash color='gray' />
-                  </button>
-                  <button>
-                    <FaEdit color='gray' />
-                  </button>
-                </div>
-              </li>
-              <li className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-                <p className=''>workout name</p>
-                <p>8</p>
-                <p>training superior part</p>
-                <p>once a week</p>
-                <p className='hidden md:flex'>15 min ago</p>
-                <div className='flex gap-2'>
-                  <button>
-                    <FaTrash color='gray' />
-                  </button>
-                  <button>
-                    <FaEdit color='gray' />
-                  </button>
-                </div>
-              </li>
+              {workoutsListByClient?.map((workout) => (
+                <li
+                  key={workout.id}
+                  className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-6 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'
+                >
+                  <p
+                    onClick={handleGetWorkoutsByClient}
+                    className='cursor-pointer'
+                  >
+                    {workout.name}
+                  </p>
+
+                  <p>
+                    {
+                      workout?.exercises.filter(
+                        (exercise) => exercise.exerciseId !== null,
+                      ).length
+                    }
+                  </p>
+                  <p>{workout.goal}</p>
+                  <p>{workout.frequency}</p>
+                  <p className='hidden md:flex'>{workout.lastDone}</p>
+                  <div className='flex gap-3'>
+                    <button onClick={() => handleDeleteWorkout(workout.id)}>
+                      <FaTrash color='gray' />
+                    </button>
+                    <button onClick={() => handleEditWorkout(workout.id)}>
+                      <FaEdit color='gray' />
+                    </button>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

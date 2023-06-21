@@ -10,8 +10,8 @@ import api from './api';
 //   return response.data;
 // }
 
-export async function saveWorkout(body) {
-  const response = await api.post('/workouts', body);
+export async function saveWorkout(body, clientId) {
+  const response = await api.post(`/workouts/${clientId}`, body);
 
   return response.data;
 }
@@ -24,6 +24,18 @@ export async function getWorkoutById(workoutId) {
 
 export async function getListOfWorkouts() {
   const response = await api.get('/workouts/');
+
+  return response.data;
+}
+
+export async function getListOfWorkoutsByClientId(clientId) {
+  const response = await api.get(`/workouts/clients/${clientId}`);
+
+  return response.data;
+}
+
+export async function deleteWorkout(workoutId) {
+  const response = await api.delete(`/workouts/${workoutId}`);
 
   return response.data;
 }

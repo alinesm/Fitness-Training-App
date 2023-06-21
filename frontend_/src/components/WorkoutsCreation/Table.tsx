@@ -20,11 +20,13 @@ function Table({
   setSupersetsList,
   openModalCircuit,
   openModalSuperset,
+  workOutItialInfo,
+  setWorkOutItialInfo,
 }) {
   const [rest, setRest] = useState('90');
   const [numRounds, setNumRounds] = useState(1);
   const [indexCircuitEdit, setIndexCircuitEdit] = useState(null); //index of circuit to be edited
-  const [isEditing, setIsEditing] = useState(false); //in
+  const [isEditing, setIsEditing] = useState(false);
 
   function addRest() {
     const combinedArray = [...exercisesList, { rest: rest }];
@@ -38,6 +40,13 @@ function Table({
           WORKOUT NAME
         </h1>
         <input
+          value={workOutItialInfo.workoutName}
+          onChange={(e) =>
+            setWorkOutItialInfo({
+              ...workOutItialInfo,
+              workoutName: e.target.value,
+            })
+          }
           type='text'
           className='w-full h-10 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         />
@@ -45,8 +54,17 @@ function Table({
       <div className='flex px-4 gap-20'>
         <div className=''>
           <h1 className='text-gray-600 text-sm font-semibold mb-1'>GOAL</h1>
-          <select className='h-10 w-36 py-1 px-1 text-sm border rounded-md'>
-            <option value=''>Select</option>
+          <select
+            onChange={(e) =>
+              setWorkOutItialInfo({ ...workOutItialInfo, goal: e.target.value })
+            }
+            className='h-10 w-36 py-1 px-1 text-sm border rounded-md'
+          >
+            <option value='cardio'>Cardio training</option>
+            <option value='strength'>Strength training</option>
+            <option value='hypertrophy'>Hypertrophy training</option>
+            <option value='endurance'>Endurance training</option>
+            <option value='power'>Power training</option>
           </select>
         </div>
 
@@ -54,8 +72,22 @@ function Table({
           <h1 className='text-sm font-semibold mb-1 text-gray-600'>
             FREQUENCY
           </h1>
-          <select className='h-10 w-36 py-1 px-1 text-sm border rounded-md'>
-            <option value=''>Select</option>
+          <select
+            onChange={(e) =>
+              setWorkOutItialInfo({
+                ...workOutItialInfo,
+                frequency: e.target.value,
+              })
+            }
+            className='h-10 w-36 py-1 px-1 text-sm border rounded-md'
+          >
+            <option value='once'>once a week</option>
+            <option value='twice'>twice a week</option>
+            <option value='three'>three times a week</option>
+            <option value='four'>four times a week</option>
+            <option value='five'>five times a week</option>
+            <option value='six'>six times a week</option>
+            <option value='seven'>seven times a week</option>
           </select>
         </div>
       </div>
@@ -64,7 +96,16 @@ function Table({
         <h1 className='text-sm font-semibold mb-1 text-gray-600'>
           INSTRUCTIONS
         </h1>
-        <textarea className='w-full h-32 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'></textarea>
+        <textarea
+          value={workOutItialInfo.description}
+          onChange={(e) =>
+            setWorkOutItialInfo({
+              ...workOutItialInfo,
+              description: e.target.value,
+            })
+          }
+          className='w-full h-32 p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+        ></textarea>
       </div>
 
       <h1 className='text-gray-600 text-base border-gray-300 border-y font-bold uppercase bg-gray-200 py-3 px-4'>
@@ -102,7 +143,7 @@ function Table({
         </button>
       </div>
 
-      <div class='w-full text-sm text-left dark:text-gray-400'>
+      <div className='w-full text-sm text-left dark:text-gray-400'>
         <TableHead />
         {exercisesList.length === 0 && (
           <div className='flex items-center justify-center'>
