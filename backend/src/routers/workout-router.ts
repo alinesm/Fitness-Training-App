@@ -1,9 +1,21 @@
 import { Router } from 'express';
-import { getListOfWorkouts, getWorkoutById, postWorkout } from '@/controllers/workout-controller';
+import {
+  deleteWorkoutById,
+  getListOfWorkouts,
+  getListOfWorkoutsByClientId,
+  getWorkoutById,
+  postWorkout,
+  updateWorkoutById,
+} from '@/controllers/workout-controller';
 
 const workoutsRouter = Router();
 
 // usersRouter.post('/', validateBody(createUserSchema), usersPost);
-workoutsRouter.post('/', postWorkout).get('/', getListOfWorkouts).get('/:workoutId', getWorkoutById);
+workoutsRouter
+  .post('/:clientId', postWorkout)
+  .get('/', getListOfWorkouts)
+  .get('/clients/:clientId', getListOfWorkoutsByClientId)
+  .get('/:workoutId', getWorkoutById)
+  .delete('/:workoutId', deleteWorkoutById);
 
 export { workoutsRouter };

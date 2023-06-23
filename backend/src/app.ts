@@ -3,15 +3,15 @@ import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
 
-import { loadEnv, connectDb, disconnectDB } from '@/config';
-
-loadEnv();
+import { usersRouter } from './routers/users-router';
+import { authenticationRouter } from './routers/authentication-router';
 
 import { workoutsRouter } from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
 
-// import { usersRouter, authenticationRouter } from '@/routers';
-// import { authenticationRouter } from '@/routers';
+import { loadEnv, connectDb, disconnectDB } from '@/config';
+
+loadEnv();
 
 const app = express();
 app
@@ -19,8 +19,8 @@ app
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/workouts', workoutsRouter)
-  // .use('/users', usersRouter)
-  // .use('/auth', authenticationRouter)
+  .use('/users', usersRouter)
+  .use('/auth', authenticationRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

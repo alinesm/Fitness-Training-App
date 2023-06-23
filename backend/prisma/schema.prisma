@@ -7,18 +7,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  Session   Session[]
+  Client    Client[]
+}
+
+model Session {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model Client {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String?
+  email     String?
+  status    String?
+  location  String?
+  goal      String?
+  age       String?
+  weight    String?
+  height    String?
+  gender    String?
+  Workout   Workout[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
 model Workout {
   id          Int        @id @default(autoincrement())
+  client      Client?    @relation(fields: [clientId], references: [id])
+  clientId    Int?
   name        String
   description String?
+  goal        String?
+  frequency   String?
+  lastDone    DateTime?
   exercises   Exercise[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
 }
 
 model Exercise {
   id           Int        @id @default(autoincrement())
   exerciseId   String?
-  exerciseGift String
-  exerciseName String
+  exerciseGift String?
+  exerciseName String?
   sets         String?
   text         String?
   restSecs     String?
@@ -29,16 +73,22 @@ model Exercise {
   circuitId    Int?
   Supertest    Supertest? @relation(fields: [supertestId], references: [id])
   supertestId  Int?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime?  @updatedAt
 }
 
 model Circuit {
   id        Int        @id @default(autoincrement())
-  rounds    String
+  rounds    Int?
   exercises Exercise[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
 }
 
 model Supertest {
   id        Int        @id @default(autoincrement())
-  rounds    String
+  rounds    Int?
   exercises Exercise[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
 }

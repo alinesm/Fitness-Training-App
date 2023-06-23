@@ -1,10 +1,10 @@
-// import { Router } from 'express';
-// import { singInPost } from '@/controllers';
-// import { validateBody } from '@/middlewares';
-// import { signInSchema } from '@/schemas';
+import { Router } from 'express';
+import { singInPost } from '@/controllers/authentication-controller';
+import { validateBody } from '@/middlewares';
+import { signInSchema } from '@/schemas';
 
-// const authenticationRouter = Router();
+const authenticationRouter = Router();
 
-// authenticationRouter.post('/sign-in', validateBody(signInSchema), singInPost);
+authenticationRouter.post('/sign-in', validateBody(signInSchema), singInPost);
 
-// export { authenticationRouter };
+export { authenticationRouter };

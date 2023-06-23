@@ -1,10 +1,22 @@
 import { Exercise, Supertest, Circuit } from '@prisma/client';
 import workoutRepository from '@/repositories/workout-repository';
 
-async function postWorkout(workout: any) {
-  const workoutDataId = await workoutRepository.createWorkoutData(workout);
-  console.log('workoutDataId', workoutDataId);
-  return workoutDataId;
+async function postWorkout(workout: any, clientId: number) {
+  return await workoutRepository.createWorkoutData(workout, clientId);
+}
+
+async function getListOfWorkoutsByClientId(clientId: number) {
+  const data = workoutRepository.geListOfWorkoutsByClientId(clientId);
+  return data;
+}
+
+async function deleteWorkoutById(workoutId: number) {
+  const data = workoutRepository.deleteWorkoutById(workoutId);
+  return data;
+}
+
+async function updateWorkoutById(workoutId: number, workout: any) {
+  return workoutRepository.updateWorkoutById(workoutId, workout);
 }
 
 async function getWorkoutById(workoutId: number) {
@@ -19,7 +31,33 @@ async function getWorkoutById(workoutId: number) {
     sets?: string;
     text?: string;
     restSecs?: string;
+    workoutId?: number;
+    clientId?: number;
+    workoutName?: string;
+    description?: string;
+    goal?: string;
+    frequency?: string;
+    workOutItialInfo?: {
+      workoutId: number;
+      clientId: number;
+      workoutName: string;
+      description: string;
+      goal: string;
+      frequency: string;
+    };
   }[] = [];
+
+  const initialInfo = {
+    workOutItialInfo: {
+      workoutId: data.id,
+      clientId: data.clientId,
+      workoutName: data.name,
+      description: data.description,
+      goal: data.goal,
+      frequency: data.frequency,
+    },
+  };
+  result.push(initialInfo);
 
   const exercises = data.exercises.sort((a, b) => a.workoutOrder - b.workoutOrder);
   console.log(exercises);
@@ -157,6 +195,23 @@ function formatExercise(exercise: Exercise & { Supertest: Supertest; Circuit: Ci
     workoutOrder: exercise.workoutOrder,
   };
 }
+
+async function getListOfWorkouts() {
+  const workouts = await workoutRepository.getListOfWorkouts();
+
+  return workouts;
+}
+
+const workoutService = {
+  postWorkout,
+  getWorkoutById,
+  getListOfWorkouts,
+  getListOfWorkoutsByClientId,
+  deleteWorkoutById,
+  updateWorkoutById,
+};
+
+export default workoutService;
 
 // async function getWorkoutById(workoutId: number) {
 //   const data = await workoutRepository.getWorkoutById(workoutId);
@@ -299,20 +354,6 @@ function formatExercise(exercise: Exercise & { Supertest: Supertest; Circuit: Ci
 
 //   return output;
 // }
-
-async function getListOfWorkouts() {
-  const workouts = await workoutRepository.getListOfWorkouts();
-
-  return workouts;
-}
-
-const workoutService = {
-  postWorkout,
-  getWorkoutById,
-  getListOfWorkouts,
-};
-
-export default workoutService;
 
 // [
 //   {

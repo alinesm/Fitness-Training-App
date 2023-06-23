@@ -118,19 +118,23 @@ async function createExercise(
   });
 }
 
-async function getWorkoutId() {
+async function createWorkoutInitialInfo(clientId: number, initialInfo: any) {
   const { id } = await prisma.workout.create({
     data: {
-      name: 'testeName',
-      description: 'teste descrip',
+      clientId: clientId,
+      name: initialInfo.workoutName,
+      description: initialInfo.description,
+      goal: initialInfo.goal,
+      frequency: initialInfo.frequency,
     },
   });
   return id;
 }
 
-async function createWorkoutData(workoutData: any) {
-  const workoutId = await getWorkoutId();
-  workoutData.map(
+async function createWorkoutData(workoutData: any, clientId: number) {
+  const initialInfo = workoutData[0].workOutItialInfo;
+  const workoutId = await createWorkoutInitialInfo(clientId, initialInfo);
+  workoutData[1].map(
     (
       exercise: {
         supertests: any;
@@ -173,6 +177,56 @@ function getWorkoutById(workoutId: number) {
   });
 }
 
+async function geListOfWorkoutsByClientId(clientId: number) {
+  const result = await prisma.workout.findMany({
+    where: {
+      clientId: clientId,
+    },
+    include: {
+      exercises: {
+        include: {
+          Supertest: true,
+          Circuit: true,
+        },
+      },
+    },
+  });
+
+  return result;
+}
+
+async function deleteWorkoutById(workoutId: number) {
+  await prisma.exercise.deleteMany({
+    where: {
+      workoutId: workoutId,
+    },
+  });
+  const deleteWorkoutById = await prisma.workout.delete({
+    where: {
+      id: workoutId,
+    },
+  });
+
+  return deleteWorkoutById;
+}
+
+async function updateWorkoutById(workoutId: number, workout: any) {
+  const clientId = workout[0].workOutItialInfo.clientId;
+
+  await prisma.exercise.deleteMany({
+    where: {
+      workoutId: workoutId,
+    },
+  });
+  await prisma.workout.delete({
+    where: {
+      id: workoutId,
+    },
+  });
+
+  createWorkoutData(workout, clientId);
+}
+
 async function getListOfWorkouts() {
   const result = await prisma.workout.findMany({
     select: {
@@ -189,6 +243,10 @@ const workoutRepository = {
   createWorkoutData,
   getWorkoutById,
   getListOfWorkouts,
+  geListOfWorkoutsByClientId,
+  deleteWorkoutById,
+  updateWorkoutById,
+  createWorkoutInitialInfo,
 };
 
 export default workoutRepository;

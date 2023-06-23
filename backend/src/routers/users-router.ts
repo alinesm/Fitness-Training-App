@@ -1,14 +1,14 @@
-// import { Router } from 'express';
+import { Router } from 'express';
 
-// import { createUserSchema } from '@/schemas';
-// import { validateBody } from '@/middlewares';
-// import { usersPost } from '@/controllers';
+import { createUserSchema } from '@/schemas';
+import { validateBody } from '@/middlewares';
+import { usersPost } from '@/controllers/users-controller';
 
-// const usersRouter = Router();
+const usersRouter = Router();
 
-// usersRouter.post('/', validateBody(createUserSchema), usersPost);
+usersRouter.post('/', validateBody(createUserSchema), usersPost);
 
-// export { usersRouter };
+export { usersRouter };
 
 // model user {
 //   id             Int              @id @default(autoincrement())
