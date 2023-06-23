@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import workoutService from '@/services/workout-service';
+import { AuthenticatedRequest } from '@/middlewares/authentication-middleware';
 
-export async function postWorkout(req: Request, res: Response, next: NextFunction) {
+export async function postWorkout(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
-    // const { userId } = req;
     // const userId = 123;
     const { clientId } = req.params;
     const { workout } = req.body;

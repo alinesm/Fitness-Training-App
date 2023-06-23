@@ -85,6 +85,14 @@ function WorkoutListByClient({
               <span className='hidden md:grid'>Last Done</span>
               <span>Actions</span>
             </div>
+            {workoutsListByClient.length === 0 && (
+              <div className='h-32  flex items-center justify-center text-base text-gray-700'>
+                <p className='text-center'>
+                  No workouts yet, please start to create workout plans
+                </p>
+              </div>
+            )}
+
             <ul>
               {workoutsListByClient?.map((workout) => (
                 <li

@@ -18,7 +18,7 @@ import useToken from './hooks/useToken';
 export default function App() {
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <UserProvider>
         {/* <Router> */}
         <Routes>
@@ -43,7 +43,8 @@ export default function App() {
   );
 }
 
-function ProtectedRouteGuard({ children }) {
+{
+  /* function ProtectedRouteGuard({ children }) {
   const token = useToken();
 
   if (!token) {
@@ -51,4 +52,5 @@ function ProtectedRouteGuard({ children }) {
   }
 
   return <>{children}</>;
+} */
 }

@@ -1,7 +1,7 @@
 import { prisma } from '@/config';
 
 async function createSuperset(workoutId: number, exercise: { supertests: any[] }, index: number) {
-  const rounds = exercise.supertests[0].supersetOf;
+  const rounds = Number(exercise.supertests[0].supersetOf);
   const superset = await prisma.supertest.create({
     data: {
       rounds: rounds,
@@ -33,7 +33,7 @@ async function createCircuits(
   exercise: { supertests?: any; circuits?: any; rest?: any },
   index: number,
 ) {
-  const rounds = exercise.circuits[0].circuitOf;
+  const rounds = Number(exercise.circuits[0].circuitOf);
   const circuit = await prisma.circuit.create({
     data: {
       rounds: rounds,
