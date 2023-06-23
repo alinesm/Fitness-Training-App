@@ -4,36 +4,51 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-// import { ToastContainer } from 'react-toastify';
 
 import { UserProvider } from './contexts/UserContext';
-import NavBar from './components/NavBar';
+
 import Home from './pages/Home';
 import ExerciseDetail from './pages/ExerciseDetail';
-
-// import useToken from './hooks/useToken';
+import SignIn from './pages/SignIn';
+import { ToastContainer } from 'react-toastify';
+import Dashboard from './pages/Dashboard';
+import Enroll from './pages/Enroll';
+import useToken from './hooks/useToken';
 
 export default function App() {
   return (
-    <div>
-      {/* <NavBar /> */}
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/exercise/:id' element={<ExerciseDetail />} />
-      </Routes>
-      {/* <Footer /> */}
-    </div>
+    <>
+      <ToastContainer />
+      <UserProvider>
+        {/* <Router> */}
+        <Routes>
+          <Route path='/enroll' element={<Enroll />} />
+          <Route path='/sign-in' element={<SignIn />} />
+
+          {/* <Route
+              path='/dashboard'
+              element={
+                <ProtectedRouteGuard>
+                  <Dashboard />
+                </ProtectedRouteGuard>
+              }
+            > */}
+          <Route path='/exercise/:id' element={<ExerciseDetail />} />
+          <Route path='/dashboard' element={<Home />} />
+          {/* </Route> */}
+        </Routes>
+        {/* </Router> */}
+      </UserProvider>
+    </>
   );
 }
 
-// function ProtectedRouteGuard({ children }) {
-//   const token = useToken();
+function ProtectedRouteGuard({ children }) {
+  const token = useToken();
 
-//   if (!token) {
-//     return <Navigate to="/sign-in" />;
-//   }
+  if (!token) {
+    return <Navigate to='/sign-in' />;
+  }
 
-//   return <>
-//     {children}
-//   </>;
-// }
+  return <>{children}</>;
+}

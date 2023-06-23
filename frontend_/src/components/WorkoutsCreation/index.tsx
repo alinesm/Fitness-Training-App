@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import AddExercises from './AddExercises';
 import Table from './Table';
-import { toast } from 'react-toastify';
-import { saveWorkout } from '../../services/workoutApi';
 import { FaWindowClose } from 'react-icons/fa';
+import { saveWorkout } from '../../services/workoutApi';
 
-function WorkoutsCreation({ setOpenCreateWorkout }) {
+function WorkoutsCreation({
+  setOpenCreateWorkout,
+  isEditingWorkout,
+  workoutTobeEdited,
+  setWorkoutTobeEdited,
+  workOutItialInfo,
+  setWorkOutItialInfo,
+  handleEditWorkout,
+  exercisesList,
+  setExercisesList,
+  handleSaveButtonClick,
+  handleSaveExerciseInfo,
+}) {
   const [openModalSuperset, setOpenModalSuperset] = useState(false);
   const [openModalCircuit, setOpenModalCircuit] = useState(false); //modal for circuit
   const [supersetsList, setSupersetsList] = useState([]);
   const [circuitList, setCircuitList] = useState([]); //circuit list added to workout
-  const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
+
   const [teste, setTeste] = useState({
     exerciseId: '',
     exerciseGift: '',
@@ -19,55 +30,28 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
     text: '',
     restSecs: '',
   });
-  const [workOutItialInfo, setWorkOutItialInfo] = useState({
-    workoutName: '',
-    goal: '',
-    frequency: '',
-    description: '',
-  });
 
-  function handleSaveExerciseInfo(updatedExerciseInfo, index) {
-    setExercisesList((prevList) => {
-      const newList = [...prevList];
-      newList[index] = updatedExerciseInfo;
-      return newList;
-    });
-  }
-
-  async function handleSaveButtonClick(e) {
-    e.preventDefault();
-
-    if (exercisesList.length === 0) {
-      setOpenCreateWorkout(false);
-    }
-
-    exercisesList.forEach((exerciseInfo, index) => {
-      handleSaveExerciseInfo(exerciseInfo, index);
-    });
-    const newData = {
-      workout: [{ workOutItialInfo: workOutItialInfo }, exercisesList],
-    };
-
-    try {
-      const clientId = 2;
-      await saveWorkout(newData, clientId);
-      setOpenCreateWorkout(false);
-      console.log('newData', newData);
-      toast('Reserva realizada!');
-    } catch (err) {
-      toast('Não foi possível salvar suas informações!');
-    }
-  }
+  console.log('id', workOutItialInfo.workoutId);
 
   return (
     <div className='flex flex-col absolute h-fit w-full inset-0 z-40 bg-black bg-opacity-70'>
       <div className='px-4 rounded-t-lg justify-between flex gap-3 bg-gray-400 mt-10  items-center text-white  mx-auto w-11/12 '>
-        <button
-          className='uppercase text-white px-3 text-center my-1 bg-gray-500 rounded-md'
-          onClick={(e) => handleSaveButtonClick(e)}
-        >
-          save
-        </button>
+        {isEditingWorkout ? (
+          <button
+            className='uppercase text-white px-3 text-center my-1 bg-blue-500 rounded-md'
+            onClick={() => handleEditWorkout(workOutItialInfo.workoutId)}
+          >
+            edit
+          </button>
+        ) : (
+          <button
+            className='uppercase text-white px-3 text-center my-1 bg-gray-500 rounded-md'
+            onClick={(e) => handleSaveButtonClick(e)}
+          >
+            save
+          </button>
+        )}
+
         <div
           onClick={() => setOpenCreateWorkout(false)}
           className='cursor-pointer'
@@ -79,8 +63,10 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
       <div className='h-fit rounded-b-lg mx-auto w-11/12 overflow-y-auto bg-white transition-transform'>
         <div className='grid grid-cols-2  w-full'>
           <Table
-            exercisesList={exercisesList}
-            setExercisesList={setExercisesList}
+            exercisesList={isEditingWorkout ? workoutTobeEdited : exercisesList}
+            setExercisesList={
+              isEditingWorkout ? setWorkoutTobeEdited : setExercisesList
+            }
             setOpenModalSuperset={setOpenModalSuperset}
             openModalSuperset={openModalSuperset}
             setOpenModalCircuit={setOpenModalCircuit}
@@ -92,11 +78,14 @@ function WorkoutsCreation({ setOpenCreateWorkout }) {
             onSaveExerciseInfo={handleSaveExerciseInfo}
             workOutItialInfo={workOutItialInfo}
             setWorkOutItialInfo={setWorkOutItialInfo}
+            isEditingWorkout={isEditingWorkout}
           />
 
           <AddExercises
-            exercisesList={exercisesList}
-            setExercisesList={setExercisesList}
+            exercisesList={isEditingWorkout ? workoutTobeEdited : exercisesList}
+            setExercisesList={
+              isEditingWorkout ? setWorkoutTobeEdited : setExercisesList
+            }
             openModalSuperset={openModalSuperset}
             setSupersetsList={setSupersetsList}
             supersetsList={supersetsList}

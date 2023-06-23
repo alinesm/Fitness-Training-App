@@ -39,3 +39,9 @@ export async function deleteWorkout(workoutId) {
 
   return response.data;
 }
+
+export async function editWorkout(workoutId) {
+  const response = await api.put(`/workouts/${workoutId}`);
+
+  return response.data;
+}

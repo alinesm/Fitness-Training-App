@@ -11,6 +11,7 @@ function CircuitsSubTable({
   setNumRounds,
   setIndexCircuitEdit,
   setIsEditing,
+  handleDelete,
 }) {
   function handleEditCircuit(index) {
     setOpenModalCircuit(true);
@@ -35,7 +36,7 @@ function CircuitsSubTable({
             </div>
 
             <div className='flex gap-2'>
-              <button>
+              <button onClick={() => handleDelete(index)}>
                 <FaTrash color='gray' />
               </button>
               <button onClick={() => handleEditCircuit(index)}>

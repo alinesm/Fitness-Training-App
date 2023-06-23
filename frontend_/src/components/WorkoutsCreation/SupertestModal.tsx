@@ -23,9 +23,6 @@ function SupertestModal({
 
   function handleCreateEditSuperset() {
     const updatedExercisesList = [...exercisesList];
-    //if isEditing and the user deleted all the exercises
-    //from the circuit, the circuit should be deleted from exercisesList
-
     if (isEditing) {
       updatedExercisesList[indexCircuitEdit].supertests = [
         { supersetOf: numRounds },

@@ -10,8 +10,7 @@ function AddSupersetsExercises({
   const maxLength = 13;
 
   function handleDeleteExercise(id) {
-    // console.log(arr.map((item) => item.supertests ? item.supertests.map((subItem) => subItem) : item).flat())
-
+    //fix
     const updatedExercise = exercisesList.filter(
       (item) => item.exerciseId !== id,
     );

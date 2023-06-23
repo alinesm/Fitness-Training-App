@@ -6,14 +6,40 @@ function ExerciseInfo({
   onSaveExerciseInfo,
   exercisesList,
   setExercisesList,
+  isEditingWorkout,
+  handleDelete,
 }) {
-  function handleDeleteExercise(id) {
-    // console.log(arr.map((item) => item.supertests ? item.supertests.map((subItem) => subItem) : item).flat())
+  function handleTextChange(e) {
+    const updatedExerciseInfo = {
+      ...exerciseInfo,
+      text: e.target.value,
+    };
+    const updatedExercisesList = [...exercisesList];
+    updatedExercisesList[index] = updatedExerciseInfo;
+    setExercisesList(updatedExercisesList);
+    onSaveExerciseInfo(updatedExerciseInfo, index);
+  }
 
-    const updatedExercise = exercisesList.filter(
-      (item) => item.exerciseId !== id,
-    );
-    setExercisesList(updatedExercise);
+  function handleSetsChange(e) {
+    const updatedExerciseInfo = {
+      ...exerciseInfo,
+      sets: e.target.value,
+    };
+    const updatedExercisesList = [...exercisesList];
+    updatedExercisesList[index] = updatedExerciseInfo;
+    setExercisesList(updatedExercisesList);
+    onSaveExerciseInfo(updatedExerciseInfo, index);
+  }
+
+  function handleRestSecsChange(e) {
+    const updatedExerciseInfo = {
+      ...exerciseInfo,
+      restSecs: e.target.value,
+    };
+    const updatedExercisesList = [...exercisesList];
+    updatedExercisesList[index] = updatedExerciseInfo;
+    setExercisesList(updatedExercisesList);
+    onSaveExerciseInfo(updatedExerciseInfo, index);
   }
 
   return (
@@ -35,11 +61,7 @@ function ExerciseInfo({
         <input
           value={exerciseInfo.sets}
           onChange={(e) => {
-            const updatedExerciseInfo = {
-              ...exerciseInfo,
-              sets: e.target.value,
-            };
-            onSaveExerciseInfo(updatedExerciseInfo, index);
+            handleSetsChange(e);
           }}
           type='number'
           min={1}
@@ -53,13 +75,7 @@ function ExerciseInfo({
       <div className='w-44 dark:text-white text-gray-900 '>
         <input
           value={exerciseInfo.text}
-          onChange={(e) => {
-            const updatedExerciseInfo = {
-              ...exerciseInfo,
-              text: e.target.value,
-            };
-            onSaveExerciseInfo(updatedExerciseInfo, index);
-          }}
+          onChange={(e) => handleTextChange(e)}
           type='text'
           className='bg-gray-50 w-40 border border-gray-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           placeholder='reps, weight, time, etc'
@@ -70,11 +86,7 @@ function ExerciseInfo({
         <select
           value={exerciseInfo.restSecs}
           onChange={(e) => {
-            const updatedExerciseInfo = {
-              ...exerciseInfo,
-              restSecs: e.target.value,
-            };
-            onSaveExerciseInfo(updatedExerciseInfo, index);
+            handleRestSecsChange(e);
           }}
           className='bg-gray-50 w-24 border border-gray-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         >
@@ -88,12 +100,21 @@ function ExerciseInfo({
           size={16}
           style={{ cursor: 'pointer' }}
           color='gray'
-          onClick={() => handleDeleteExercise(exerciseInfo.exerciseId)}
+          onClick={() => handleDelete(index)}
         />
       </div>
     </div>
   );
 }
+
+// value={exerciseInfo.sets}
+// onChange={(e) => {
+//   const updatedExerciseInfo = {
+//     ...exerciseInfo,
+//     sets: e.target.value,
+//   };
+//   onSaveExerciseInfo(updatedExerciseInfo, index);
+// }}
 
 // import React from 'react';
 // import { FaTrash } from 'react-icons/fa';

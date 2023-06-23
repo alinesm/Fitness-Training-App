@@ -11,6 +11,8 @@ function SupertestSubTable({
   setIndexCircuitEdit,
   setSupersetsList,
   setIsEditing,
+  setExercisesList,
+  handleDelete,
 }) {
   function handleEditSuperset(index) {
     setOpenModalSuperset(true);
@@ -35,7 +37,7 @@ function SupertestSubTable({
             </div>
 
             <div className='flex gap-2'>
-              <button>
+              <button onClick={() => handleDelete(index)}>
                 <FaTrash color='gray' />
               </button>
               <button onClick={() => handleEditSuperset(index)}>

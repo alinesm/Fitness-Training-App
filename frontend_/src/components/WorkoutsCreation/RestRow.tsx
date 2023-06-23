@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegHandPaper, FaTrash } from 'react-icons/fa';
 
-function RestRow({ setRest }) {
+function RestRow({ setRest, handleDelete, index }) {
   return (
     <div className='bg-red-50 flex py-2 items-center justify-between px-4 border-gray-300 border-b dark:bg-gray-800 dark:border-gray-700 '>
       <div className='w-20 '>
@@ -18,9 +18,9 @@ function RestRow({ setRest }) {
             <option value='45'>45 secs</option>
           </select>
         </div>
-        <div className='mr-3 ml-12'>
-          <FaTrash size={16} style={{ cursor: 'pointer' }} />
-        </div>
+        <button onClick={() => handleDelete(index)} className='mr-3 ml-12'>
+          <FaTrash color='gray' size={16} style={{ cursor: 'pointer' }} />
+        </button>
       </div>
     </div>
   );

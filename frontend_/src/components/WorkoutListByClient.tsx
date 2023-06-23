@@ -3,7 +3,6 @@ import avatar from '../assets/avatar.jpg';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
   deleteWorkout,
-  getListOfWorkouts,
   getListOfWorkoutsByClientId,
   getWorkoutById,
 } from '../services/workoutApi';
@@ -14,6 +13,8 @@ function WorkoutListByClient({
   openCreateWorkout,
   setWorkoutTobeEdited,
   workoutTobeEdited,
+  setIsEditingWorkout,
+  setWorkOutItialInfo,
 }) {
   const [workoutsListByClient, setWorkoutsListByClient] = useState([]);
 
@@ -25,8 +26,6 @@ function WorkoutListByClient({
     try {
       await deleteWorkout(id);
       await getWorkouts();
-      // setOpenCreateWorkout(false);
-      // console.log('newData', newData);
       toast('deleted!');
     } catch (err) {
       toast('Não foi possível salvar suas informações!');
@@ -35,23 +34,21 @@ function WorkoutListByClient({
 
   useEffect(() => {
     //include client id
-
     getWorkouts();
   }, [openCreateWorkout]);
-  console.log('workoutsList', workoutsListByClient);
 
   async function handleGetWorkoutsByClient() {
     //pegar os exercicios do workout e renderizar direitinho
   }
 
   async function handleEditWorkout(id) {
-    console.log(id);
+    setIsEditingWorkout(true);
     setOpenCreateWorkout(true);
     const editWorkout = await getWorkoutById(id);
-    console.log('edit', editWorkout);
-
-    setWorkoutTobeEdited(editWorkout);
+    setWorkOutItialInfo(editWorkout[0].workOutItialInfo);
+    setWorkoutTobeEdited(editWorkout.slice(1));
   }
+
   console.log('workoutTobeEdited', workoutTobeEdited);
 
   return (

@@ -4,6 +4,20 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 function Sidebar() {
+  // const location = useLocation();
+
+  // function isActive(buttonPath) {
+  //   return location.pathname === buttonPath;
+  // }
+
+  //   <Link to="/dashboard/subscription">
+  //   <button active={isActive('/dashboard/subscription')}>
+  //   {/* ${props => props.active ? 'background-color: #ccc;' : ''} */}
+  //     <FaFileContract />
+  //     <span>Inscrição</span>
+  //   </NavigationButton>
+  // </Link>
+
   return (
     <div className='flex'>
       <div className='fixed w-20 h-screen p-4 bg-white border-r-[1px] flex flex-col justify-between'>

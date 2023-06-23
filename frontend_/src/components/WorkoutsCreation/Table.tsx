@@ -22,6 +22,7 @@ function Table({
   openModalSuperset,
   workOutItialInfo,
   setWorkOutItialInfo,
+  isEditingWorkout,
 }) {
   const [rest, setRest] = useState('90');
   const [numRounds, setNumRounds] = useState(1);
@@ -31,6 +32,16 @@ function Table({
   function addRest() {
     const combinedArray = [...exercisesList, { rest: rest }];
     setExercisesList(combinedArray);
+  }
+
+  function handleDeleteElementFromExerciseList(index) {
+    const updatedExercisesList = [...exercisesList];
+    console.log('index2', index);
+    console.log('updatedExercisesList2', updatedExercisesList[index]);
+    const updated = updatedExercisesList.filter(
+      (item) => item !== updatedExercisesList[index],
+    );
+    setExercisesList(updated);
   }
 
   return (
@@ -165,6 +176,8 @@ function Table({
               setNumRounds={setNumRounds}
               setIndexCircuitEdit={setIndexCircuitEdit}
               setIsEditing={setIsEditing}
+              setExercisesList={setExercisesList}
+              handleDelete={handleDeleteElementFromExerciseList}
             />
           ) : exerciseInfo.circuits ? (
             <CircuitsSubTable
@@ -176,9 +189,14 @@ function Table({
               setNumRounds={setNumRounds}
               setIndexCircuitEdit={setIndexCircuitEdit}
               setIsEditing={setIsEditing}
+              handleDelete={handleDeleteElementFromExerciseList}
             />
           ) : exerciseInfo.rest ? (
-            <RestRow setRest={setRest} />
+            <RestRow
+              setRest={setRest}
+              index={index}
+              handleDelete={handleDeleteElementFromExerciseList}
+            />
           ) : (
             <ExerciseInfo
               key={exerciseInfo.exerciseName}
@@ -187,6 +205,8 @@ function Table({
               onSaveExerciseInfo={onSaveExerciseInfo}
               exercisesList={exercisesList}
               setExercisesList={setExercisesList}
+              isEditingWorkout={isEditingWorkout}
+              handleDelete={handleDeleteElementFromExerciseList}
             />
           ),
         )}
@@ -226,46 +246,3 @@ function Table({
 }
 
 export default Table;
-
-// {exercisesList.map((exerciseInfo) =>
-//     <ExerciseInfo
-//       key={exerciseInfo.exerciseName}
-//       exercisesList={exercisesList}
-//       setExercisesList={setExercisesList}
-//       exerciseInfo={exerciseInfo}
-//       teste={teste}
-//       setTeste={setTeste}
-//     />
-
-// )}
-
-// {exercisesList.map((exerciseInfo) => (
-//   <ExerciseInfo
-//     key={exerciseInfo.exerciseName}
-//     exercisesList={exercisesList}
-//     setExercisesList={setExercisesList}
-//     exerciseInfo={exerciseInfo}
-//   />
-// ))}
-
-// {supersetsList.length > 0 && (
-//   <>
-//     <tr className='flex gap-10 py-3 w-full'>
-//       <p className=' border-t-4'>Superset of </p>
-//       <input
-//         type='number'
-//         className='bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-//         placeholder='1'
-//         required
-//       />
-//     </tr>
-//     {supersetsList.map((exerciseInfo) => (
-//       <SupertestsInfo
-//         key={exerciseInfo.exerciseName}
-//         exercisesList={exercisesList}
-//         setExercisesList={setExercisesList}
-//         exerciseInfo={exerciseInfo}
-//       />
-//     ))}
-//   </>
-// )}
