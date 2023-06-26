@@ -45,3 +45,15 @@ export async function editWorkout(workoutId) {
 
   return response.data;
 }
+
+export async function getListOfClientsByUserId(userId) {
+  const response = await api.get(`/clients/${userId}`);
+
+  return response.data;
+}
+
+export async function deleteClient(clientId) {
+  const response = await api.delete(`/clients/${clientId}`);
+
+  return response.data;
+}

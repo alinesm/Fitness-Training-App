@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
       },
+      gridTemplateColumns: {
+        custom: '2fr 2fr 2fr 1fr 2fr 1.5fr 1fr 2fr 0.25fr',
+      },
     },
   },
   plugins: [],

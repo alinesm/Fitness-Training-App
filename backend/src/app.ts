@@ -6,7 +6,7 @@ import cors from 'cors';
 import { usersRouter } from './routers/users-router';
 import { authenticationRouter } from './routers/authentication-router';
 
-import { workoutsRouter } from '@/routers';
+import { clientsRouter, workoutsRouter } from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
 
 import { loadEnv, connectDb, disconnectDB } from '@/config';
@@ -20,6 +20,7 @@ app
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/workouts', workoutsRouter)
   .use('/users', usersRouter)
+  .use('/clients', clientsRouter)
   .use('/auth', authenticationRouter)
   .use(handleApplicationErrors);
 

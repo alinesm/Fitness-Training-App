@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import WorkoutListByClient from '../components/WorkoutListByClient';
 import { deleteWorkout, saveWorkout } from '../services/workoutApi';
+import ClientsList from '../components/ClientsList';
 
 function Home() {
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
@@ -76,14 +77,16 @@ function Home() {
   return (
     <div className='w-full relative'>
       <Sidebar />
-      <WorkoutListByClient
+      {/* <WorkoutListByClient
         setOpenCreateWorkout={setOpenCreateWorkout}
         openCreateWorkout={openCreateWorkout}
         workoutTobeEdited={workoutTobeEdited}
         setWorkoutTobeEdited={setWorkoutTobeEdited}
         setIsEditingWorkout={setIsEditingWorkout}
         setWorkOutItialInfo={setWorkOutItialInfo}
-      />
+      /> */}
+
+      <ClientsList openCreateWorkout={openCreateWorkout} />
 
       {openCreateWorkout && (
         <WorkoutsCreation

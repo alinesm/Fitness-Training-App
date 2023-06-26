@@ -14,6 +14,9 @@ import { ToastContainer } from 'react-toastify';
 import Dashboard from './pages/Dashboard';
 import Enroll from './pages/Enroll';
 import useToken from './hooks/useToken';
+import { ReviewsRounded } from '@mui/icons-material';
+import { privateDecrypt } from 'crypto';
+import WorkoutsCreation from './components/WorkoutsCreation';
 
 export default function App() {
   return (
