@@ -4,8 +4,6 @@ import ExerciseCard from './ExerciseCard';
 import {
   getAllExercises,
   getExercisesByBodyPart,
-  exerciseData,
-  setExerciseData,
 } from '../services/externalApi';
 import data from '../assets/data';
 
@@ -26,39 +24,42 @@ function Exercises({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    function exercisesByBodyPart() {
-      let exercisesData = [];
-
-      if (bodyPart === 'all') {
-        exercisesData = [...data];
-      } else {
-        exercisesData = data.filter((exercise) =>
-          exercise.bodyPart.includes(bodyPart),
-        );
-      }
-      setExercises(exercisesData);
-      setIsLoading(false);
-    }
-    exercisesByBodyPart();
-  }, [bodyPart, setExercises]);
-
   // useEffect(() => {
-  //   async function exercisesByBodyPart() {
+  //   function exercisesByBodyPart() {
   //     let exercisesData = [];
 
   //     if (bodyPart === 'all') {
-  //       exercisesData = await getAllExercises();
+  //       exercisesData = [...data];
   //     } else {
-  //       exercisesData = await getExercisesByBodyPart(bodyPart);
+  //       exercisesData = data.filter((exercise) =>
+  //         exercise.bodyPart.includes(bodyPart),
+  //       );
   //     }
-
   //     setExercises(exercisesData);
   //     setIsLoading(false);
   //   }
   //   exercisesByBodyPart();
   // }, [bodyPart, setExercises]);
-  // console.log('bodypart', bodyPart);
+
+  useEffect(() => {
+    async function exercisesByBodyPart() {
+      let exercisesData = [];
+
+      if (bodyPart === 'all') {
+        exercisesData = await getAllExercises();
+      } else {
+        exercisesData = await getExercisesByBodyPart(bodyPart);
+        // exercisesData = data.filter((exercise) =>
+        //   exercise.bodyPart.includes(bodyPart),
+        // );
+      }
+
+      setExercises(exercisesData);
+      setIsLoading(false);
+    }
+    exercisesByBodyPart();
+  }, [bodyPart, setExercises]);
+  console.log('bodypart', bodyPart);
 
   return (
     <div className='flex flex-wrap gap-2'>

@@ -68,6 +68,7 @@
     "supertest": "^6.2.3",
     "ts-jest": "^26.5.5",
     "ts-node": "^10.7.0",
+    "tsc-alias": "^1.8.6",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "^1.5.13",
     "typescript": "^4.2.4",
@@ -88,6 +89,7 @@
     "http-status": "^1.5.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.3",
     "reflect-metadata": "^0.1.13"
   }
 }

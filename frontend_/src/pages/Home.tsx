@@ -38,7 +38,7 @@ function Home() {
     try {
       await deleteWorkout(id);
       //remember to change
-      const clientId = 4;
+      // const clientId = 4;
       workoutTobeEdited.forEach((exerciseInfo, index) => {
         setWorkoutTobeEdited((prevList) => {
           const newList = [...prevList];
@@ -49,7 +49,7 @@ function Home() {
       const edited = {
         workout: [{ workOutItialInfo: workOutItialInfo }, workoutTobeEdited],
       };
-      await saveWorkout(edited, clientId);
+      await saveWorkout(edited, clientId.id);
       setOpenCreateWorkout(false);
       setWorkOutItialInfo({
         workoutName: '',
@@ -60,7 +60,7 @@ function Home() {
       setExercisesList([]);
       setWorkoutTobeEdited([]);
       setIsEditingWorkout(false);
-      getListOfWorkoutsByClientId(clientId); //change
+      getListOfWorkoutsByClientId(clientId.id); //change
       console.log('neditedworkeout', edited);
       toast('Reserva realizada!');
     } catch (err) {

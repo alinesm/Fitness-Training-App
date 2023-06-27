@@ -12,19 +12,19 @@ function SearchExercises({
   const [search, setSearch] = useState('');
 
   async function bodyParts() {
-    // const bodyPartsData = await getBodyParts();
-    const bodyPartsData = [
-      'back',
-      'cardio',
-      'chest',
-      'lower arms',
-      'lower legs',
-      'neck',
-      'shoulders',
-      'upper arms',
-      'upper legs',
-      'waist',
-    ];
+    const bodyPartsData = await getBodyParts();
+    // const bodyPartsData = [
+    //   'back',
+    //   'cardio',
+    //   'chest',
+    //   'lower arms',
+    //   'lower legs',
+    //   'neck',
+    //   'shoulders',
+    //   'upper arms',
+    //   'upper legs',
+    //   'waist',
+    // ];
     setBodyPartsList(['all', ...bodyPartsData]);
   }
 
@@ -32,9 +32,26 @@ function SearchExercises({
     bodyParts();
   }, []);
 
-  function handleSearch() {
+  // function handleSearch() {
+  //   if (search) {
+  //     const exercisesData = [...data];
+  //     console.log(exercisesData);
+  //     setSearch('');
+
+  //     const filteredExercises = exercisesData.filter(
+  //       (item) =>
+  //         item.name.toLowerCase().includes(search) ||
+  //         item.target.toLowerCase().includes(search) ||
+  //         item.equipment.toLowerCase().includes(search) ||
+  //         item.bodyPart.toLowerCase().includes(search),
+  //     );
+  //     setExercises(filteredExercises);
+  //   }
+  // }
+
+  async function handleSearch() {
     if (search) {
-      const exercisesData = [...data];
+      const exercisesData = await getAllExercises();
       console.log(exercisesData);
       setSearch('');
 
@@ -48,24 +65,6 @@ function SearchExercises({
       setExercises(filteredExercises);
     }
   }
-
-  // async function handleSearch() {
-  //   if (search) {
-  //     const exercisesData = await getAllExercises();
-  //     console.log(exercisesData);
-  //     setSearch('');
-
-  //     const filteredExercises = exercisesData.filter(
-  //       (item) =>
-  //         item.name.toLowerCase().includes(search) ||
-  //         item.target.toLowerCase().includes(search) ||
-  //         item.equipment.toLowerCase().includes(search) ||
-  //         item.bodyPart.toLowerCase().includes(search),
-  //     );
-  //     console.log('aaaa', filteredExercises);
-  //     setExercises(filteredExercises);
-  //   }
-  // }
 
   return (
     <div class='relative'>
