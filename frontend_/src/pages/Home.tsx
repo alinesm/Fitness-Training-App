@@ -3,14 +3,22 @@ import WorkoutsCreation from '../components/WorkoutsCreation';
 import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar';
 import WorkoutListByClient from '../components/WorkoutListByClient';
-import { deleteWorkout, saveWorkout } from '../services/workoutApi';
+import {
+  deleteWorkout,
+  getListOfWorkouts,
+  getListOfWorkoutsByClientId,
+  saveWorkout,
+} from '../services/workoutApi';
 import ClientsList from '../components/ClientsList';
+import { get } from 'http';
 
 function Home() {
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
   const [openCreateWorkout, setOpenCreateWorkout] = useState(false);
   const [workoutTobeEdited, setWorkoutTobeEdited] = useState([]);
   const [isEditingWorkout, setIsEditingWorkout] = useState(false);
+  const [showWorkoutList, setShowWorkoutList] = useState(false); //circuit list added to workout
+  const [clientId, setClientId] = useState({}); //circuit list added to workout
   const [workOutItialInfo, setWorkOutItialInfo] = useState({
     workoutName: '',
     goal: '',
@@ -27,26 +35,37 @@ function Home() {
   }
 
   async function handleEditWorkout(id) {
-    // try {
-    //   await deleteWorkout(id);
-    //   const clientId = 2;
-    //   workoutTobeEdited.forEach((exerciseInfo, index) => {
-    //     setWorkoutTobeEdited((prevList) => {
-    //       const newList = [...prevList];
-    //       newList[index] = exerciseInfo;
-    //       return newList;
-    //     });
-    //   });
-    //   const edited = {
-    //     workout: [{ workOutItialInfo: workOutItialInfo }, workoutTobeEdited],
-    //   };
-    //   await saveWorkout(edited, clientId);
-    //   setOpenCreateWorkout(false);
-    //   console.log('neditedworkeout', edited);
-    //   toast('Reserva realizada!');
-    // } catch (err) {
-    //   toast('Não foi possível salvar suas informações!');
-    // }
+    try {
+      await deleteWorkout(id);
+      //remember to change
+      const clientId = 4;
+      workoutTobeEdited.forEach((exerciseInfo, index) => {
+        setWorkoutTobeEdited((prevList) => {
+          const newList = [...prevList];
+          newList[index] = exerciseInfo;
+          return newList;
+        });
+      });
+      const edited = {
+        workout: [{ workOutItialInfo: workOutItialInfo }, workoutTobeEdited],
+      };
+      await saveWorkout(edited, clientId);
+      setOpenCreateWorkout(false);
+      setWorkOutItialInfo({
+        workoutName: '',
+        goal: '',
+        frequency: '',
+        description: '',
+      });
+      setExercisesList([]);
+      setWorkoutTobeEdited([]);
+      setIsEditingWorkout(false);
+      getListOfWorkoutsByClientId(clientId); //change
+      console.log('neditedworkeout', edited);
+      toast('Reserva realizada!');
+    } catch (err) {
+      toast('Não foi possível salvar suas informações!');
+    }
   }
 
   async function handleSaveButtonClick(e) {
@@ -64,9 +83,17 @@ function Home() {
     };
 
     try {
-      const clientId = 2;
-      await saveWorkout(newData, clientId);
+      // const clientId = 2;
+      await saveWorkout(newData, clientId.id);
       setOpenCreateWorkout(false);
+      setWorkOutItialInfo({
+        workoutName: '',
+        goal: '',
+        frequency: '',
+        description: '',
+      });
+      setExercisesList([]);
+      setWorkoutTobeEdited([]);
       console.log('newData', newData);
       toast('Reserva realizada!');
     } catch (err) {
@@ -76,22 +103,29 @@ function Home() {
 
   return (
     <div className='w-full relative'>
-      <Sidebar />
-      {/* <WorkoutListByClient
-        setOpenCreateWorkout={setOpenCreateWorkout}
-        openCreateWorkout={openCreateWorkout}
-        workoutTobeEdited={workoutTobeEdited}
-        setWorkoutTobeEdited={setWorkoutTobeEdited}
-        setIsEditingWorkout={setIsEditingWorkout}
-        setWorkOutItialInfo={setWorkOutItialInfo}
-      /> */}
+      <Sidebar setShowWorkoutList={setShowWorkoutList} />
 
-      <ClientsList openCreateWorkout={openCreateWorkout} />
+      {showWorkoutList ? (
+        <WorkoutListByClient
+          setOpenCreateWorkout={setOpenCreateWorkout}
+          openCreateWorkout={openCreateWorkout}
+          setWorkoutTobeEdited={setWorkoutTobeEdited}
+          setIsEditingWorkout={setIsEditingWorkout}
+          setWorkOutItialInfo={setWorkOutItialInfo}
+          clientId={clientId}
+        />
+      ) : (
+        <ClientsList
+          setClientId={setClientId}
+          setShowWorkoutList={setShowWorkoutList}
+        />
+      )}
 
       {openCreateWorkout && (
         <WorkoutsCreation
           setOpenCreateWorkout={setOpenCreateWorkout}
           isEditingWorkout={isEditingWorkout}
+          setIsEditingWorkout={setIsEditingWorkout}
           workoutTobeEdited={workoutTobeEdited}
           setWorkoutTobeEdited={setWorkoutTobeEdited}
           workOutItialInfo={workOutItialInfo}

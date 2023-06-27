@@ -3,7 +3,6 @@ import { getListOfClients, deleteClientById } from '@/controllers/clients-contro
 
 const clientsRouter = Router();
 
-// usersRouter.post('/', validateBody(createUserSchema), usersPost);
 clientsRouter.get('/:userId', getListOfClients).delete('/:clientId', deleteClientById);
 
 export { clientsRouter };

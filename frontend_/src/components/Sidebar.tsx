@@ -3,7 +3,7 @@ import { FaHome, FaMoneyCheckAlt, FaUserFriends } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
-function Sidebar() {
+function Sidebar({ setShowWorkoutList }) {
   // const location = useLocation();
 
   // function isActive(buttonPath) {
@@ -36,7 +36,11 @@ function Sidebar() {
 
           <button className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>
             {/* <RxPerson size={20} /> */}
-            <FaUserFriends color='gray' size={20} />
+            <FaUserFriends
+              onClick={() => setShowWorkoutList(false)}
+              color='gray'
+              size={20}
+            />
           </button>
           <Link href='/orders'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>

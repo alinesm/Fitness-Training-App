@@ -1,12 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import avatar from '../assets/avatar.jpg';
 import { FaAngleDown, FaTrash } from 'react-icons/fa';
-import { deleteClient, getListOfClientsByUserId } from '../services/workoutApi';
+import {
+  deleteClient,
+  getListOfClientsByUserId,
+  getListOfWorkoutsByClientId,
+} from '../services/workoutApi';
 import { toast } from 'react-toastify';
 import MyLineChart from './MyLineChart';
 import UserContext from '../contexts/UserContext';
 
-function ClientsList({ openCreateWorkout }) {
+function ClientsList({ setShowWorkoutList, setClientId }) {
   //chart color map is good to see the density of the workouts other weeks and months
   const [clientsList, setClientsList] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
@@ -21,18 +25,17 @@ function ClientsList({ openCreateWorkout }) {
   useEffect(() => {
     async function getListOfClients() {
       const data = await getListOfClientsByUserId(userData.user.id);
-      console.log(data);
       setClientsList(data);
     }
     setDeletingClient(false);
     getListOfClients();
   }, [deletingClient]);
 
-  async function handleGetWorkoutsByClient() {
-    //pegar os exercicios do workout e renderizar direitinho
+  async function handleGoToWorkout(client) {
+    setShowWorkoutList(true);
+    setClientId(client);
   }
 
-  async function handleGoToWorkout(id) {}
   async function handleDeleteClient(id) {
     try {
       await deleteClient(id);
@@ -120,7 +123,10 @@ function ClientsList({ openCreateWorkout }) {
                     <p className='col-span-1'>{client.location}</p>
 
                     <div className='col-span-1 flex justify-end   gap-3'>
-                      <button className='shadow-sm text-gray-500 text-xs py-1 px-1.5 border-2 border-red-300 hover:bg-red-200 rounded-lg tracking-tighter '>
+                      <button
+                        onClick={() => handleGoToWorkout(client)}
+                        className='shadow-sm text-gray-500 text-xs py-1 px-1.5 border-2 border-red-300 hover:bg-red-200 rounded-lg tracking-tighter '
+                      >
                         workouts
                       </button>
                       <button onClick={() => handleDeleteClient(client.id)}>

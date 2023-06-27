@@ -36,8 +36,6 @@ function Table({
 
   function handleDeleteElementFromExerciseList(index) {
     const updatedExercisesList = [...exercisesList];
-    console.log('index2', index);
-    console.log('updatedExercisesList2', updatedExercisesList[index]);
     const updated = updatedExercisesList.filter(
       (item) => item !== updatedExercisesList[index],
     );
@@ -71,6 +69,7 @@ function Table({
             }
             className='h-10 w-36 py-1 px-1 text-sm border rounded-md'
           >
+            <option value=''>Select Goal</option>
             <option value='cardio'>Cardio training</option>
             <option value='strength'>Strength training</option>
             <option value='hypertrophy'>Hypertrophy training</option>
@@ -92,6 +91,8 @@ function Table({
             }
             className='h-10 w-36 py-1 px-1 text-sm border rounded-md'
           >
+            {' '}
+            <option value=''>Select frequency</option>
             <option value='once'>once a week</option>
             <option value='twice'>twice a week</option>
             <option value='three'>three times a week</option>

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AddExercises from './AddExercises';
 import Table from './Table';
 import { FaWindowClose } from 'react-icons/fa';
-import { saveWorkout } from '../../services/workoutApi';
 
 function WorkoutsCreation({
   setOpenCreateWorkout,
   isEditingWorkout,
+  setIsEditingWorkout,
   workoutTobeEdited,
   setWorkoutTobeEdited,
   workOutItialInfo,
@@ -31,6 +31,19 @@ function WorkoutsCreation({
     restSecs: '',
   });
 
+  function handleCloseModal() {
+    setWorkOutItialInfo({
+      workoutName: '',
+      goal: '',
+      frequency: '',
+      description: '',
+    });
+    setExercisesList([]);
+    setWorkoutTobeEdited([]);
+    setIsEditingWorkout(false);
+    setOpenCreateWorkout(false);
+  }
+
   console.log('id', workOutItialInfo.workoutId);
 
   return (
@@ -52,10 +65,7 @@ function WorkoutsCreation({
           </button>
         )}
 
-        <div
-          onClick={() => setOpenCreateWorkout(false)}
-          className='cursor-pointer'
-        >
+        <div onClick={handleCloseModal} className='cursor-pointer'>
           <FaWindowClose size={25} />
         </div>
       </div>

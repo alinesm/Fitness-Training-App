@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import avatar from '../assets/avatar.jpg';
+import { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
   deleteWorkout,
@@ -12,14 +11,15 @@ function WorkoutListByClient({
   setOpenCreateWorkout,
   openCreateWorkout,
   setWorkoutTobeEdited,
-  workoutTobeEdited,
   setIsEditingWorkout,
   setWorkOutItialInfo,
+  clientId,
 }) {
   const [workoutsListByClient, setWorkoutsListByClient] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function getWorkouts() {
-    const data = await getListOfWorkoutsByClientId(2);
+    const data = await getListOfWorkoutsByClientId(clientId.id);
     setWorkoutsListByClient(data);
   }
   async function handleDeleteWorkout(id) {
@@ -33,7 +33,6 @@ function WorkoutListByClient({
   }
 
   useEffect(() => {
-    //include client id
     getWorkouts();
   }, [openCreateWorkout]);
 
@@ -49,23 +48,15 @@ function WorkoutListByClient({
     setWorkoutTobeEdited(editWorkout.slice(1));
   }
 
-  console.log('workoutTobeEdited', workoutTobeEdited);
+  // console.log('workoutsListByClient', workoutsListByClient);
 
   return (
     <div className='pt-6 bg-gray-100 ml-20 h-screen'>
       <div className='w-10/12 mx-auto '>
         <div className='flex items-center justify-between mb-10'>
           <div className='flex items-center gap-3 '>
-            <div className='w-fit '>
-              <img
-                className='rounded-full h-12 w-12'
-                src={avatar}
-                alt='user-profile'
-              />
-            </div>
-
             <h2 className='font-bold text-lg capitalize text-gray-700'>
-              Jimmy's, workouts
+              {clientId.name}'s, workouts
             </h2>
           </div>{' '}
           <button
@@ -115,7 +106,7 @@ function WorkoutListByClient({
                   </p>
                   <p>{workout.goal}</p>
                   <p>{workout.frequency}</p>
-                  <p className='hidden md:flex'>{workout.lastDone}</p>
+                  <p className='hidden md:flex'>1 week ago</p>
                   <div className='flex gap-3'>
                     <button onClick={() => handleDeleteWorkout(workout.id)}>
                       <FaTrash color='gray' />
