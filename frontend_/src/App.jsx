@@ -17,7 +17,7 @@ export default function App() {
         {/* <Router> */}
         <Routes>
           <Route path='/enroll' element={<Enroll />} />
-          <Route path='/sign-in' element={<SignIn />} />
+          <Route path='/' element={<SignIn />} />
 
           {/* <Route
               path='/dashboard'
