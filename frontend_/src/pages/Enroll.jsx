@@ -20,7 +20,7 @@ export default function Enroll() {
       try {
         await signUp(email, password);
         toast('Inscrito com sucesso! Por favor, faça login.');
-        navigate('/sign-in');
+        navigate('/');
       } catch (error) {
         toast('Não foi possível fazer o cadastro!');
       }
@@ -156,7 +156,7 @@ export default function Enroll() {
                   Already have an account? Go to login{' '}
                   <Link
                     class='font-medium text-primary-600 hover:underline dark:text-primary-500'
-                    to='/sign-in'
+                    to='/'
                   >
                     Sign in
                   </Link>

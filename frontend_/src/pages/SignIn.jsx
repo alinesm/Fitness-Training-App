@@ -13,6 +13,18 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
+  async function goToDemo() {
+    try {
+      const userData = await signIn('jimmy@gmail.com', '123456');
+      console.log('userData', userData);
+      setUserData(userData);
+      toast('Login realizado com sucesso!');
+      navigate('/dashboard');
+    } catch (err) {
+      toast('Não foi possível fazer o login!');
+    }
+  }
+
   async function submit(event) {
     event.preventDefault();
 
@@ -136,10 +148,19 @@ export default function SignIn() {
                 </div>
                 <button
                   type='submit'
-                  class='w-full text-white bg-red-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
+                  class='w-full mb-3 text-white bg-red-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
                 >
                   Sign in
                 </button>
+                <Link
+                  onClick={goToDemo}
+                  className='text-xs text-gray-600 font-bold  tracking-tighter'
+                >
+                  <p className='mt-2 italic'>
+                    Just want to see how the app works?{' '}
+                    <span className='underline '>Click here to see demo</span>
+                  </p>
+                </Link>
                 <p class='text-sm font-light text-gray-500 dark:text-gray-400'>
                   Don’t have an account yet?{' '}
                   <Link
