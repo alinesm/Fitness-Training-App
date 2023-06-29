@@ -1,19 +1,13 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { UserProvider } from './contexts/UserContext';
 
 import Home from './pages/Home';
 import ExerciseDetail from './pages/ExerciseDetail';
 import SignIn from './pages/SignIn';
-import { ToastContainer } from 'react-toastify';
 
 import Enroll from './pages/Enroll';
-import useToken from './hooks/useToken';
+// import useToken from './hooks/useToken';
 
 export default function App() {
   return (
@@ -43,8 +37,7 @@ export default function App() {
   );
 }
 
-{
-  /* function ProtectedRouteGuard({ children }) {
+/* function ProtectedRouteGuard({ children }) {
   const token = useToken();
 
   if (!token) {
@@ -53,4 +46,3 @@ export default function App() {
 
   return <>{children}</>;
 } */
-}

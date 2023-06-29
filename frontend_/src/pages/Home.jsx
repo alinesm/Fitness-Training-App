@@ -10,7 +10,6 @@ import {
   saveWorkout,
 } from '../services/workoutApi';
 import ClientsList from '../components/ClientsList';
-import { get } from 'http';
 
 function Home() {
   const [exercisesList, setExercisesList] = useState([]); //exercises list added to workout
