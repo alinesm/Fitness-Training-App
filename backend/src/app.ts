@@ -5,11 +5,14 @@ import cors from 'cors';
 
 import { usersRouter } from './routers/users-router';
 import { authenticationRouter } from './routers/authentication-router';
+import { connectDb, disconnectDB, loadEnv } from './config';
+import { clientsRouter, workoutsRouter } from './routers';
+import { handleApplicationErrors } from './middlewares';
 
-import { clientsRouter, workoutsRouter } from '@/routers';
-import { handleApplicationErrors } from '@/middlewares';
+// import { clientsRouter, workoutsRouter } from '@/routers';
+// import { handleApplicationErrors } from '@/middlewares';
 
-import { loadEnv, connectDb, disconnectDB } from '@/config';
+// import { loadEnv, connectDb, disconnectDB } from '@/config';
 
 loadEnv();
 

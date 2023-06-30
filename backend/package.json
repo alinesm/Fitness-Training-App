@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/server.js",
+    "build": "tsc",
     "lint": "eslint .",
     "lint:staged": "lint-staged",
     "dev:load-envs": "dotenv -e .env.development",

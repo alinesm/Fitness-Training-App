@@ -1,4 +1,4 @@
-import { prisma } from '@/config';
+import { prisma } from '../config';
 
 async function createSuperset(workoutId: number, exercise: { supertests: any[] }, index: number) {
   const rounds = Number(exercise.supertests[0].supersetOf);

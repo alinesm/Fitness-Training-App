@@ -1,5 +1,5 @@
 import { Exercise, Supertest, Circuit } from '@prisma/client';
-import workoutRepository from '@/repositories/workout-repository';
+import workoutRepository from '../repositories/workout-repository';
 
 async function postWorkout(workout: any, clientId: number) {
   return await workoutRepository.createWorkoutData(workout, clientId);

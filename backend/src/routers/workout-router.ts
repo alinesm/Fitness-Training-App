@@ -6,7 +6,7 @@ import {
   getWorkoutById,
   postWorkout,
   updateWorkoutById,
-} from '@/controllers/workout-controller';
+} from '../controllers/workout-controller';
 
 const workoutsRouter = Router();
 

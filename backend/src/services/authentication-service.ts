@@ -2,12 +2,12 @@ import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { exclude } from '@/utils/prisma-utils';
-import userRepository from '@/repositories/user-repository';
-import { invalidCredentialsError } from '@/errors';
-import sessionRepository from '@/repositories/session-repository';
+export * from '../errors';
 
-export * from '@/errors';
+import { exclude } from '../utils/prisma-utils';
+import userRepository from '../repositories/user-repository';
+import { invalidCredentialsError } from '../errors';
+import sessionRepository from '../repositories/session-repository';
 
 async function signIn(params: SignInParams): Promise<SignInResult> {
   const { email, password } = params;

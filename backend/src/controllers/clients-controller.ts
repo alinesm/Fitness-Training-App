@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
-import { AuthenticatedRequest } from '@/middlewares/authentication-middleware';
-import clientsService from '@/services/clients-service';
+import { AuthenticatedRequest } from '../middlewares/authentication-middleware';
+import clientsService from '../services/clients-service';
 
 export async function getListOfClients(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {

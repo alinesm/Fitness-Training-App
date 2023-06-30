@@ -1,5 +1,5 @@
 import { notFoundError } from './authentication-service';
-import clientsRepository from '@/repositories/clients-repository';
+import clientsRepository from '../repositories/clients-repository';
 
 async function getListOfClients(userId: number) {
   const list = await clientsRepository.getListOfClients(userId);
